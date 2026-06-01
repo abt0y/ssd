@@ -1,0 +1,3366 @@
+
+<!-- Font Integrations -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Icon Libraries -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<style>
+:root {
+  --nav-w: 240px;
+  --hdr-h: 60px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-serif: 'Lora', 'Georgia', serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+/* Light Theme (default) */
+.theme-light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-header-bg: rgba(255, 255, 255, 0.85);
+  
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748b;
+  
+  --color-border-primary: #e2e8f0;
+  --color-border-secondary: #cbd5e1;
+  --color-border-tertiary: #f1f5f9;
+  
+  --color-accent: #1d9e75;
+  --color-accent-hover: #15805d;
+  --color-accent-bg: #e1f5ee;
+  --color-accent-text: #085041;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Theme */
+.theme-dark {
+  --color-bg-primary: #0b0f19;
+  --color-bg-secondary: #111827;
+  --color-bg-tertiary: #1f2937;
+  --color-header-bg: rgba(11, 15, 25, 0.85);
+  
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #9ca3af;
+  
+  --color-border-primary: #1f2937;
+  --color-border-secondary: #374151;
+  --color-border-tertiary: #111827;
+  
+  --color-accent: #2ec4b6;
+  --color-accent-hover: #209f93;
+  --color-accent-bg: #0d3835;
+  --color-accent-text: #cbf3f0;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35), 0 4px 6px -4px rgba(0, 0, 0, 0.35);
+}
+
+/* Language Swapping Utility */
+html:not([lang="vi"]) [lang="vi"] {
+  display: none !important;
+}
+html[lang="vi"] [lang="en"] {
+  display: none !important;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  transition: var(--transition-smooth);
+  min-height: 100vh;
+}
+
+#app { display: flex; min-height: 100vh; position: relative; }
+
+/* Sticky Mobile Drawer Sidebar */
+#sidebar {
+  width: var(--nav-w);
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-border-primary);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--color-bg-secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition-smooth);
+  z-index: 100;
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.nav-title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  padding: 0 1.25rem 1rem;
+}
+.nav-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 1.25rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--color-bg-primary); }
+.nav-item.active {
+  border-left-color: var(--color-accent);
+  background: var(--color-bg-primary);
+}
+.nav-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  min-width: 18px;
+  padding-top: 1px;
+}
+.nav-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  transition: var(--transition-smooth);
+}
+.nav-item.active .nav-label { color: var(--color-text-primary); font-weight: 600; }
+
+/* Sticky Responsive Top Header */
+#top-header {
+  height: var(--hdr-h);
+  background: var(--color-header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  transition: var(--transition-smooth);
+}
+#header-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.header-btn {
+  background: none;
+  border: 1px solid var(--color-border-primary);
+  color: var(--color-text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: var(--transition-smooth);
+}
+.header-btn:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-secondary);
+}
+#menu-btn {
+  display: none;
+}
+
+/* Premium Segmented Language Controller */
+.lang-selector {
+  display: inline-flex;
+  background: var(--color-bg-tertiary);
+  padding: 3px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border-primary);
+}
+.lang-btn {
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.lang-btn.active {
+  background: var(--color-bg-primary);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Sidebar Drawer Backdrop Overlay */
+#sidebar-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#sidebar-backdrop.active {
+  display: block;
+  opacity: 1;
+}
+
+#content-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#content {
+  flex: 1;
+  padding: 2.5rem;
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--color-text-primary); margin: 2rem 0 0.85rem; letter-spacing: -0.01em; }
+h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--color-text-primary); margin: 1.5rem 0 0.65rem; }
+h4 { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin: 1rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; }
+p { font-family: var(--font-serif); font-size: 15px; line-height: 1.8; color: var(--color-text-secondary); margin-bottom: 1rem; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+li { font-family: var(--font-sans); font-size: 14px; line-height: 1.8; color: var(--color-text-secondary); margin-bottom: 0.35rem; }
+strong { font-weight: 600; color: var(--color-text-primary); }
+.subtitle { font-family: var(--font-sans); font-size: 14px; color: var(--color-text-tertiary); margin-bottom: 2rem; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid var(--color-border-primary); margin: 2rem 0; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.kpi {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  transition: var(--transition-smooth);
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-secondary);
+  box-shadow: var(--shadow-md);
+}
+.kpi-val { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--color-accent); }
+.kpi-lbl { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-top: 6px; line-height: 1.4; }
+.kpi-sub { font-family: var(--font-sans); font-size: 11px; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.4; }
+
+.card {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-secondary);
+}
+.card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 1rem; flex-wrap: wrap; }
+.badge {
+  font-size: 11px; font-weight: 600; padding: 4px 10px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.badge-teal { background: var(--color-bg-secondary); color: var(--color-accent); border-color: var(--color-accent); }
+.badge-blue { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; }
+.badge-amber { background: #FAEEDA; color: #633806; border-color: #EF9F27; }
+.badge-red { background: #FCEBEB; color: #791F1F; border-color: #F09595; }
+.badge-purple { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+.badge-coral { background: #FAECE7; color: #712B13; border-color: #F0997B; }
+.badge-green { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+
+.alert {
+  border-left: 4px solid;
+  padding: 1rem 1.25rem;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 1.25rem;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-sm);
+}
+.alert-warn { border-color: #EF9F27; background: #FAEEDA22; }
+.alert-info { border-color: #378ADD; background: #E6F1FB22; }
+.alert-danger { border-color: #E24B4A; background: #FCEBEB22; }
+.alert-success { border-color: #1D9E75; background: #E1F5EE22; }
+
+/* Responsive Table Wrapper */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; }
+th { text-align: left; font-weight: 600; font-size: 12px; color: var(--color-text-primary); padding: 12px 16px; border-bottom: 1px solid var(--color-border-secondary); background: var(--color-bg-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--color-border-primary); color: var(--color-text-secondary); vertical-align: top; line-height: 1.6; }
+tr:last-child td { border-bottom: none; }
+
+.flow-row { display: flex; align-items: stretch; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap; }
+.flow-step {
+  flex: 1; min-width: 150px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  padding: 1rem 1.15rem;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+.flow-step:hover {
+  border-color: var(--color-border-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.flow-step + .flow-step { margin-left: 0; }
+.flow-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--color-accent); margin-bottom: 6px; }
+.flow-title { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+.flow-desc { font-size: 12px; color: var(--color-text-tertiary); line-height: 1.5; }
+
+.matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.matrix-cell {
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  background: var(--color-bg-primary);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+.matrix-cell:hover {
+  border-color: var(--color-border-secondary);
+  box-shadow: var(--shadow-md);
+}
+.matrix-cell h4 { margin-top: 0; margin-bottom: 0.75rem; color: var(--color-text-primary); }
+
+.phoneme-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-border-primary); }
+.phoneme-row:last-child { border-bottom: none; }
+.phoneme-tag {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 600;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 4px;
+  padding: 2px 8px;
+  min-width: 46px;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+.pbar-wrap { flex: 1; background: var(--color-bg-tertiary); border-radius: 100px; height: 8px; overflow: hidden; }
+.pbar { height: 100%; border-radius: 100px; transition: width 0.8s ease-in-out; }
+.pbar-green { background: #1d9e75; }
+.pbar-amber { background: #ea9f27; }
+.pbar-red { background: #e24b4a; }
+.pbar-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); min-width: 80px; text-align: right; }
+
+.nav-btn-row { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-primary); }
+.nav-btn {
+  font-family: var(--font-sans);
+  font-size: 13px; font-weight: 500; color: var(--color-text-secondary);
+  background: var(--color-bg-primary); border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 18px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+}
+.nav-btn:hover:not(:disabled) {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-secondary);
+  transform: translateY(-1px);
+}
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.75rem 0 1.25rem; }
+.tag { font-family: var(--font-sans); font-size: 12px; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border-primary); color: var(--color-text-secondary); background: var(--color-bg-secondary); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.progress-bar-thin { height: 4px; background: var(--color-bg-tertiary); border-radius: 100px; margin-bottom: 2rem; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--color-accent); border-radius: 100px; transition: width 0.4s ease; }
+
+.section-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.65rem; }
+
+.inline-code { font-family: var(--font-mono); font-size: 12px; background: var(--color-bg-tertiary); border: 1px solid var(--color-border-primary); border-radius: 4px; padding: 2px 6px; color: var(--color-text-primary); }
+
+.logic-rule {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 10px;
+  background: var(--color-bg-primary);
+  transition: var(--transition-smooth);
+}
+.logic-rule:hover {
+  border-color: var(--color-border-secondary);
+  box-shadow: var(--shadow-sm);
+}
+.logic-if { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #085041; background: #e1f5ee; border-radius: 4px; padding: 3px 6px; flex-shrink: 0; }
+.logic-then { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #3c3489; background: #eeedfe; border-radius: 4px; padding: 3px 6px; flex-shrink: 0; }
+.logic-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Responsiveness adjustments for Tablets and Mobile */
+@media (max-width: 1023px) {
+  #sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+  #menu-btn {
+    display: inline-flex !important;
+  }
+  #top-header {
+    padding: 0 1.5rem;
+  }
+  #content {
+    padding: 1.5rem 1.25rem;
+  }
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .matrix-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Smooth transitions for theme switching */
+body, #sidebar, #top-header, .card, .kpi, .header-btn, .lang-selector, .lang-btn, .nav-item, .nav-label, th, td, h1, h2, h3, h4, p, li, a, .alert, .matrix-cell {
+  transition: background 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+</style>
+<!-- Mobile Drawer Backdrop -->
+<div id="sidebar-backdrop" onclick="toggleSidebar()"></div>
+
+<div id="app">
+  <nav id="sidebar">
+    <div class="sidebar-content">
+      <div class="nav-title">
+        <span lang="en">Clinical Report</span>
+        <span lang="vi">Báo cáo Lâm sàng</span>
+      </div>
+      <a class="nav-item active" onclick="showSection(0)" href="#">
+        <span class="nav-num">01</span>
+        <span class="nav-label" lang="en">Executive Summary</span>
+        <span class="nav-label" lang="vi">Tóm tắt Dự án</span>
+      </a>
+      <a class="nav-item" onclick="showSection(1)" href="#">
+        <span class="nav-num">02</span>
+        <span class="nav-label" lang="en">Global Best Practices</span>
+        <span class="nav-label" lang="vi">Quy chuẩn Quốc tế</span>
+      </a>
+      <a class="nav-item" onclick="showSection(2)" href="#">
+        <span class="nav-num">03</span>
+        <span class="nav-label" lang="en">Vietnamese Landscape</span>
+        <span class="nav-label" lang="vi">Thực trạng Việt Nam</span>
+      </a>
+      <a class="nav-item" onclick="showSection(3)" href="#">
+        <span class="nav-num">04</span>
+        <span class="nav-label" lang="en">Gap Analysis</span>
+        <span class="nav-label" lang="vi">Phân tích Khoảng trống</span>
+      </a>
+      <a class="nav-item" onclick="showSection(4)" href="#">
+        <span class="nav-num">05</span>
+        <span class="nav-label" lang="en">Research Agenda</span>
+        <span class="nav-label" lang="vi">Đề xuất Nghiên cứu</span>
+      </a>
+      <a class="nav-item" onclick="showSection(5)" href="#">
+        <span class="nav-num">06</span>
+        <span class="nav-label" lang="en">Platform Architecture</span>
+        <span class="nav-label" lang="vi">Kiến trúc Nền tảng</span>
+      </a>
+      <a class="nav-item" onclick="showSection(6)" href="#">
+        <span class="nav-num">07</span>
+        <span class="nav-label" lang="en">Strategic Conclusion</span>
+        <span class="nav-label" lang="vi">Kết luận Chiến lược</span>
+      </a>
+    </div>
+  </nav>
+
+  <div id="content-wrap">
+    <header id="top-header">
+      <button id="menu-btn" class="header-btn" onclick="toggleSidebar()" aria-label="Toggle Sidebar Menu">
+        <i class="ti ti-menu-2"></i>
+      </button>
+      <div id="header-title">
+        <span lang="en">SSD Platform Blueprint</span>
+        <span lang="vi">Đề án Nền tảng SSD</span>
+      </div>
+      <div class="header-controls">
+        <div class="lang-selector">
+          <button id="lang-btn-en" class="lang-btn active" onclick="setLanguage('en')">ENG</button>
+          <button id="lang-btn-vi" class="lang-btn" onclick="setLanguage('vi')">VIE</button>
+        </div>
+        <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode">
+          <i id="theme-icon" class="ti ti-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <main id="content">
+    <div id="progress-bar" class="progress-bar-thin"><div class="progress-bar-fill" id="pfill" style="width:14%"></div></div>
+
+    <!-- SECTION 1: EXECUTIVE SUMMARY -->
+    <section class="section active" id="s0">
+      <div class="section-tag">
+        <span lang="en">Section 01 of 07</span>
+        <span lang="vi">Phần 01 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Executive Summary</span>
+        <span lang="vi">Tóm tắt Dự án</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Global vs. Vietnamese SSD landscape · Digital triage and treatment platform value proposition</span>
+        <span lang="vi">Bối cảnh Rối loạn Phát âm thế giới vs. Việt Nam · Định vị giá trị nền tảng sàng lọc và trị liệu kỹ thuật số</span>
+      </p>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-val">~7–9%</div>
+          <div class="kpi-lbl">
+            <span lang="en">Global SSD prevalence in children under age 8</span>
+            <span lang="vi">Tỷ lệ mắc SSD toàn cầu ở trẻ dưới 8 tuổi</span>
+          </div>
+          <div class="kpi-sub">
+            <span lang="en">Likely underreported in LMIC settings</span>
+            <span lang="vi">Thường bị đánh giá thấp ở các nước thu nhập trung bình & thấp (LMIC)</span>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">&lt;500</div>
+          <div class="kpi-lbl">
+            <span lang="en">Estimated practicing SLPs across Vietnam (all specialties)</span>
+            <span lang="vi">Số lượng chuyên viên âm ngữ trị liệu (SLP) tại Việt Nam</span>
+          </div>
+          <div class="kpi-sub">
+            <span lang="en">97M+ population; extreme scarcity</span>
+            <span lang="vi">Dân số 97 triệu+; tình trạng khan hiếm trầm trọng</span>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">0</div>
+          <div class="kpi-lbl">
+            <span lang="en">Nationally standardized Vietnamese pediatric phonological norm databases</span>
+            <span lang="vi">Cơ sở dữ liệu ngữ âm nhi khoa Việt Nam được chuẩn hóa quốc gia</span>
+          </div>
+          <div class="kpi-sub">
+            <span lang="en">As of 2024 clinical literature</span>
+            <span lang="vi">Tính đến các tài liệu lâm sàng năm 2024</span>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">6 tones</div>
+          <div class="kpi-lbl">
+            <span lang="en">Vietnamese lexical tones — phonemically contrastive</span>
+            <span lang="vi">Các thanh điệu tiếng Việt — mang tính đối lập ngữ nghĩa</span>
+          </div>
+          <div class="kpi-sub">
+            <span lang="en">Unaddressed by all Western SSD tools</span>
+            <span lang="vi">Chưa được bất kỳ công cụ SSD phương Tây nào hỗ trợ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger">
+        <strong>
+          <span lang="en">Critical infrastructure gap:</span>
+          <span lang="vi">Lỗ hổng hạ tầng nghiêm trọng:</span>
+        </strong>
+        <span lang="en">Vietnam possesses fewer than 1 qualified SLP per 200,000 children. The WHO-recommended ratio in high-income countries is approximately 1:1,000–2,500. This represents a 100× service gap that no workforce scaling strategy can close within a decade.</span>
+        <span lang="vi">Việt Nam hiện có chưa đầy 1 chuyên viên SLP đủ tiêu chuẩn trên 200.000 trẻ em. Tỷ lệ khuyến nghị của WHO tại các quốc gia thu nhập cao là khoảng 1:1.000 đến 1:2.500. Điều này thể hiện khoảng trống dịch vụ lên tới 100 lần, khoảng trống mà không một chiến lược phát triển nhân sự truyền thống nào có thể san lấp trong vòng một thập kỷ.</span>
+      </div>
+
+      <h2>
+        <span lang="en">The core problem</span>
+        <span lang="vi">Vấn đề cốt lõi</span>
+      </h2>
+      <p>
+        <span lang="en">Speech Sound Disorders (SSDs) encompass a heterogeneous group of difficulties including phonological disorders, articulation disorders, childhood apraxia of speech (CAS), and dysarthria. Early, accurate identification and intervention before age 5 is strongly correlated with improved literacy, academic, and social outcomes. Vietnam's pediatric population is exposed to one of the world's most phonologically complex languages — a six-tone, monosyllabic, Mon-Khmer-origin tonal system with significant regional dialectal variation (Northern, Central, Southern registers) — yet lacks the specialized diagnostic infrastructure to address SSD within this linguistic context.</span>
+        <span lang="vi">Rối loạn phát âm (Speech Sound Disorders - SSD) bao gồm một nhóm không đồng nhất các khó khăn bao gồm rối loạn ngữ âm, rối loạn cấu âm, chứng bất lực vận động lời nói ở trẻ em (CAS) và loạn vận ngôn. Việc phát hiện sớm và can thiệp chính xác trước 5 tuổi liên quan chặt chẽ đến việc cải thiện khả năng đọc viết, kết quả học tập và xã hội của trẻ. Dân số trẻ em Việt Nam tiếp xúc với một trong những hệ thống ngữ âm phức tạp nhất thế giới — hệ thống thanh điệu đơn âm tiết có nguồn gốc Môn-Khmer với sáu thanh điệu phân biệt rõ rệt và sự khác biệt vùng miền lớn (Bắc, Trung, Nam) — nhưng lại thiếu hạ tầng chẩn đoán chuyên biệt để giải quyết SSD trong bối cảnh ngôn ngữ này.</span>
+      </p>
+
+      <p>
+        <span lang="en">Western assessment tools (GFTA-3, DEAP, DIVA, PLS-5) are validated on English-speaking cohorts. Their translated adaptations into Vietnamese are methodologically compromised by phonemic non-equivalence, tonal omission, and normative data misapplication. The result is systematic misdiagnosis: over-pathologizing dialectal variation and under-detecting genuine tonal processing deficits.</span>
+        <span lang="vi">Các công cụ đánh giá phương Tây (GFTA-3, DEAP, DIVA, PLS-5) được chuẩn hóa trên các nhóm nói tiếng Anh. Các bản dịch phóng tác của chúng sang tiếng Việt bị hạn chế về mặt phương pháp do sự không tương đương về âm vị, bỏ sót thanh điệu và áp dụng sai lệch dữ liệu chuẩn hóa. Kết quả là dẫn tới sai sót hệ thống: chẩn đoán quá mức đối với các biến thể phương ngữ vùng miền và bỏ sót các tổn thương thực thể trong xử lý thanh điệu.</span>
+      </p>
+
+      <h2>
+        <span lang="en">The platform value proposition</span>
+        <span lang="vi">Định vị giá trị của nền tảng</span>
+      </h2>
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-teal">
+            <span lang="en">Digital-First Triage</span>
+            <span lang="vi">Sàng lọc ưu tiên Kỹ thuật số</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Three-layer value architecture</span>
+            <span lang="vi">Kiến trúc giá trị ba lớp</span>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <th>
+                <span lang="en">Layer</span>
+                <span lang="vi">Phân lớp</span>
+              </th>
+              <th>
+                <span lang="en">Function</span>
+                <span lang="vi">Chức năng</span>
+              </th>
+              <th>
+                <span lang="en">Impact</span>
+                <span lang="vi">Tác động</span>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <span lang="en"><strong>Triage</strong></span>
+                <span lang="vi"><strong>Sàng lọc</strong></span>
+              </td>
+              <td>
+                <span lang="en">AI-mediated phonological screening delivered via caregiver smartphone; generates deficit profile across consonants, vowels, tones, and prosody</span>
+                <span lang="vi">Sàng lọc ngữ âm qua AI trên điện thoại của người chăm sóc; tạo hồ sơ khiếm khuyết về phụ âm, nguyên âm, thanh điệu và ngữ điệu</span>
+              </td>
+              <td>
+                <span lang="en">Extends SLP reach by 200× through asynchronous evaluation</span>
+                <span lang="vi">Tăng phạm vi tiếp cận của SLP lên 200 lần thông qua đánh giá không đồng bộ</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span lang="en"><strong>Mapping</strong></span>
+                <span lang="vi"><strong>Điều phối</strong></span>
+              </td>
+              <td>
+                <span lang="en">Rule-based + ML recommendation engine maps deficit signatures to culturally validated therapeutic modules (Orff-Schulwerk, Kodály, RSMM)</span>
+                <span lang="vi">Động cơ khuyến nghị dựa trên luật lệ + ML đối chiếu các dấu hiệu khiếm khuyết với các mô-đun trị liệu được kiểm chứng văn hóa (Orff-Schulwerk, Kodály, RSMM)</span>
+              </td>
+              <td>
+                <span lang="en">Eliminates unvalidated Western protocol transplant errors</span>
+                <span lang="vi">Loại bỏ các lỗi sao chép phác đồ phương Tây chưa được kiểm chứng</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span lang="en"><strong>Delivery</strong></span>
+                <span lang="vi"><strong>Can thiệp</strong></span>
+              </td>
+              <td>
+                <span lang="en">Caregiver-mediated home intervention program with fidelity monitoring, progress analytics, and escalation triggers to human SLPs</span>
+                <span lang="vi">Chương trình can thiệp tại nhà do người chăm sóc thực hiện với sự giám sát độ chính xác, phân tích tiến độ và kích hoạt chuyển tuyến đến SLP chuyên nghiệp</span>
+              </td>
+              <td>
+                <span lang="en">Closes service gap while building longitudinal normative dataset</span>
+                <span lang="vi">Thu hẹp khoảng trống dịch vụ đồng thời xây dựng bộ dữ liệu chuẩn hóa theo thời gian</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Core thesis</span>
+        <span lang="vi">Luận điểm cốt lõi</span>
+      </h2>
+      <p>
+        <span lang="en">The platform must not replicate Western clinical infrastructure digitally. Instead, it must architect a <strong>culturally indigenous, music-mediated, caregiver-deployed intervention ecosystem</strong> that uses the unique properties of Vietnamese tonal phonology as a therapeutic asset, not an obstacle. The Rational Scientific Mediating Model (RSMM) — instantiated through Orff-Schulwerk embodied rhythm and Kodály tonal scaffolding aligned to Vietnamese folk song contours — provides the evidence-adjacent theoretical substrate for this architecture.</span>
+        <span lang="vi">Nền tảng không được sao chép kỹ thuật số hạ tầng lâm sàng phương Tây. Thay vào đó, nó phải kiến thiết một <strong>hệ sinh thái can thiệp do người chăm sóc thực hiện, lấy âm nhạc làm trung gian và mang tính bản địa hóa sâu sắc</strong>, sử dụng chính các đặc tính độc đáo của hệ thống thanh điệu tiếng Việt làm tài sản trị liệu chứ không phải trở ngại. Mô hình Điều hòa Khoa học Hợp lý (RSMM) — được cụ thể hóa qua nhịp điệu cơ thể Orff-Schulwerk và thang nhạc thanh điệu Kodály tương thích với biên độ giai điệu dân ca Việt Nam — cung cấp nền tảng lý thuyết lâm sàng vững chắc cho kiến trúc này.</span>
+      </p>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" disabled>
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+          <span lang="en">Previous</span>
+          <span lang="vi">Trước đó</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(1)">
+          <span lang="en">Global Best Practices</span>
+          <span lang="vi">Quy chuẩn Quốc tế</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 2: GLOBAL BEST PRACTICES -->
+    <section class="section" id="s1">
+      <div class="section-tag">
+        <span lang="en">Section 02 of 07</span>
+        <span lang="vi">Phần 02 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Global Best Practices</span>
+        <span lang="vi">Quy chuẩn Quốc tế</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">ASHA (US) · RCSLT (UK) · Speech Pathology Australia — diagnostic protocols, frameworks, and digital innovation</span>
+        <span lang="vi">ASHA (Mỹ) · RCSLT (Anh) · Speech Pathology Australia (Úc) — phác đồ chẩn đoán, khung làm việc và đổi mới kỹ thuật số</span>
+      </p>
+
+      <h2>
+        <span lang="en">Diagnostic protocol comparison</span>
+        <span lang="vi">So sánh phác đồ chẩn đoán</span>
+      </h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th style="width:18%">
+              <span lang="en">Domain</span>
+              <span lang="vi">Lĩnh vực</span>
+            </th>
+            <th style="width:27%">
+              <span lang="en">ASHA / US</span>
+              <span lang="vi">ASHA / Mỹ</span>
+            </th>
+            <th style="width:27%">
+              <span lang="en">RCSLT / UK</span>
+              <span lang="vi">RCSLT / Anh</span>
+            </th>
+            <th style="width:28%">
+              <span lang="en">Speech Pathology Australia</span>
+              <span lang="vi">Speech Pathology Australia / Úc</span>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Primary framework</strong></span>
+              <span lang="vi"><strong>Khung chủ đạo</strong></span>
+            </td>
+            <td>
+              <span lang="en">Evidence-Based Practice (EBP) triad; ICF model; IDEA 2004 for school-age</span>
+              <span lang="vi">Bộ ba Thực hành dựa trên bằng chứng (EBP); Mô hình ICF; Đạo luật Giáo dục cá nhân khuyết tật (IDEA 2004) cho lứa tuổi học đường</span>
+            </td>
+            <td>
+              <span lang="en">RCSLT Clinical Guidelines 2005/2023; NHS pathway integration; NICE guidance</span>
+              <span lang="vi">Hướng dẫn lâm sàng RCSLT 2005/2023; Tích hợp quy trình NHS; Hướng dẫn NICE</span>
+            </td>
+            <td>
+              <span lang="en">Australian Clinical Guidelines for SSD (2021); NHMRC EBP standards</span>
+              <span lang="vi">Hướng dẫn lâm sàng Úc về SSD (2021); Tiêu chuẩn EBP của NHMRC</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Core assessments</strong></span>
+              <span lang="vi"><strong>Đánh giá cốt lõi</strong></span>
+            </td>
+            <td>
+              <span lang="en">GFTA-3, KLPA-3, DEAP, BBTOP, CELF-5, PLS-5, Khan-Lewis</span>
+              <span lang="vi">GFTA-3, KLPA-3, DEAP, BBTOP, CELF-5, PLS-5, Khan-Lewis</span>
+            </td>
+            <td>
+              <span lang="en">DEAP, Nuffield Dyspraxia Programme-3, Stackhouse & Wells model, STAP</span>
+              <span lang="vi">DEAP, Chương trình Nuffield Dyspraxia Programme-3, Mô hình Stackhouse & Wells, STAP</span>
+            </td>
+            <td>
+              <span lang="en">DEAP, PASS, DIVA, WASP, Core Vocabulary therapy tools</span>
+              <span lang="vi">DEAP, PASS, DIVA, WASP, Công cụ trị liệu Từ vựng cốt lõi</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Preferred intervention</strong></span>
+              <span lang="vi"><strong>Trị liệu ưu tiên</strong></span>
+            </td>
+            <td>
+              <span lang="en">Cycles approach, Minimal Pairs, Core Vocabulary, ReST (for CAS), Nuffield</span>
+              <span lang="vi">Phương pháp Chu kỳ (Cycles), Cặp tối thiểu (Minimal Pairs), Từ vựng cốt lõi, ReST (cho CAS), Nuffield</span>
+            </td>
+            <td>
+              <span lang="en">Phonological contrasts, Metaphon, Nuffield DP-3, PACT, PROMPT</span>
+              <span lang="vi">Đối lập ngữ âm, Metaphon, Nuffield DP-3, PACT, PROMPT</span>
+            </td>
+            <td>
+              <span lang="en">Core Vocabulary (Dodd), Complexity Approach, PACT, ReST</span>
+              <span lang="vi">Từ vựng cốt lõi (Dodd), Phương pháp Độ phức tạp, PACT, ReST</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Multilingual protocol</strong></span>
+              <span lang="vi"><strong>Giao thức đa ngữ</strong></span>
+            </td>
+            <td>
+              <span lang="en">Dynamic assessment; bilingual SLP co-treatment; community interpreter guidance (ASHA 2023)</span>
+              <span lang="vi">Đánh giá động; phối hợp trị liệu SLP song ngữ; hướng dẫn phiên dịch viên cộng đồng (ASHA 2023)</span>
+            </td>
+            <td>
+              <span lang="en">BPVS-3, Community Language SLP liaison; EAL/D frameworks</span>
+              <span lang="vi">BPVS-3, Liên lạc SLP ngôn ngữ cộng đồng; Khung EAL/D</span>
+            </td>
+            <td>
+              <span lang="en">Multilingual Children's Speech (McLeod); ELLA framework; culturally responsive practice</span>
+              <span lang="vi">Ngôn ngữ trẻ em đa ngữ (McLeod); Khung ELLA; Thực hành đáp ứng văn hóa</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Telehealth status</strong></span>
+              <span lang="vi"><strong>Y tế từ xa</strong></span>
+            </td>
+            <td>
+              <span lang="en">ASHA telehealth position statement 2021; validated for SSD in RCTs; CPT codes established</span>
+              <span lang="vi">Tuyên bố lập trường y tế từ xa ASHA 2021; kiểm chứng cho SSD trong RCT; thiết lập mã CPT</span>
+            </td>
+            <td>
+              <span lang="en">RCSLT telehealth position 2021; NHS digital-first mandate post-COVID</span>
+              <span lang="vi">Lập trường y tế từ xa RCSLT 2021; yêu cầu ưu tiên kỹ thuật số của NHS sau dịch COVID</span>
+            </td>
+            <td>
+              <span lang="en">SPA telehealth guidelines 2020; NDIS telehealth provisions; validated rurally</span>
+              <span lang="vi">Hướng dẫn y tế từ xa SPA 2020; điều khoản y tế từ xa NDIS; kiểm chứng tại các vùng nông thôn</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Caregiver-mediated</strong></span>
+              <span lang="vi"><strong>Do cha mẹ hỗ trợ</strong></span>
+            </td>
+            <td>
+              <span lang="en">PACT (Parent-Child Interaction Therapy adapted); FOCUS outcomes; coaching models</span>
+              <span lang="vi">PACT (Trị liệu tương tác Cha mẹ - Con cái sửa đổi); Kết quả FOCUS; Mô hình huấn luyện</span>
+            </td>
+            <td>
+              <span lang="en">Hanen More Than Words; Elklan programmes; family-centred practice standard</span>
+              <span lang="vi">Chương trình Hanen "More Than Words"; Chương trình Elklan; Tiêu chuẩn thực hành lấy gia đình làm trung tâm</span>
+            </td>
+            <td>
+              <span lang="en">FOCAL; family-centred practice embedded in all SSD guidelines; LENA integration</span>
+              <span lang="vi">FOCAL; Thực hành lấy gia đình làm trung tâm lồng ghép trong mọi hướng dẫn SSD; Tích hợp công nghệ LENA</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h2>
+        <span lang="en">Evidence hierarchy for SSD interventions</span>
+        <span lang="vi">Hệ thống thứ bậc bằng chứng can thiệp SSD</span>
+      </h2>
+      <div class="card">
+        <h3>
+          <span lang="en">Intervention efficacy by evidence level</span>
+          <span lang="vi">Hiệu quả can thiệp theo mức độ bằng chứng</span>
+        </h3>
+        <div style="margin-top:0.75rem">
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">Phonological contrasts</span>
+              <span lang="vi">Đối lập ngữ âm</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-green" style="width:92%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Level Ia RCT</span>
+              <span lang="vi">RCT Cấp Ia</span>
+            </span>
+          </div>
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">Core Vocabulary therapy</span>
+              <span lang="vi">Trị liệu Từ vựng cốt lõi</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-green" style="width:88%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Level Ia RCT</span>
+              <span lang="vi">RCT Cấp Ia</span>
+            </span>
+          </div>
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">ReST (for CAS)</span>
+              <span lang="vi">Trị liệu ReST (cho CAS)</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-green" style="width:85%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Level Ib RCT</span>
+              <span lang="vi">RCT Cấp Ib</span>
+            </span>
+          </div>
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">Cycles approach</span>
+              <span lang="vi">Phương pháp Chu kỳ</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-green" style="width:80%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Level IIa</span>
+              <span lang="vi">Phân tích Cấp IIa</span>
+            </span>
+          </div>
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">Music-mediated (RSMM)</span>
+              <span lang="vi">Can thiệp âm nhạc trung gian (RSMM)</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-amber" style="width:42%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Level III–IV</span>
+              <span lang="vi">Cấp III-IV</span>
+            </span>
+          </div>
+          <div class="phoneme-row">
+            <span style="font-size:13px; min-width:160px; color:var(--color-text-primary)">
+              <span lang="en">Orff/Kodály hybrid</span>
+              <span lang="vi">Hỗn hợp Orff/Kodály</span>
+            </span>
+            <div class="pbar-wrap"><div class="pbar pbar-amber" style="width:35%"></div></div>
+            <span class="pbar-label">
+              <span lang="en">Expert opinion</span>
+              <span lang="vi">Ý kiến chuyên gia</span>
+            </span>
+          </div>
+        </div>
+        <p style="font-size:12px; color:var(--color-text-tertiary); margin-top:0.75rem; margin-bottom:0">
+          <span lang="en">Note: Evidence levels follow NHMRC/OCEBM hierarchy. Music-mediated interventions lack RCT validation specifically for SSD; broader music neuroscience literature (Thaut, Wan & Huon) provides theoretical support.</span>
+          <span lang="vi">Lưu ý: Các cấp độ bằng chứng tuân theo hệ thống phân cấp NHMRC/OCEBM. Can thiệp âm nhạc trung gian hiện thiếu kiểm chứng RCT chuyên biệt cho SSD; tuy nhiên các nghiên cứu thần kinh học âm nhạc rộng hơn (Thaut, Wan & Huon) đã cung cấp các cơ sở lý thuyết vững chắc.</span>
+        </p>
+      </div>
+
+      <h2>
+        <span lang="en">Key diagnostic constructs applicable to Vietnamese context</span>
+        <span lang="vi">Các cấu trúc chẩn đoán chính có thể áp dụng cho bối cảnh Việt Nam</span>
+      </h2>
+      <div class="two-col">
+        <div class="card">
+          <span class="badge badge-blue" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Phonological processing</span>
+            <span lang="vi">Xử lý ngữ âm</span>
+          </span>
+          <ul>
+            <li>
+              <span lang="en">Phoneme inventory analysis (segmental)</span>
+              <span lang="vi">Phân tích hệ thống âm vị (phân đoạn)</span>
+            </li>
+            <li>
+              <span lang="en">Phonological process identification (syllable structure, substitution, assimilation)</span>
+              <span lang="vi">Nhận diện các quy trình ngữ âm (cấu trúc âm tiết, thay thế, đồng hóa)</span>
+            </li>
+            <li>
+              <span lang="en">Percent consonants correct (PCC) — primary severity metric</span>
+              <span lang="vi">Tỷ lệ phụ âm chính xác (PCC) — chỉ số mức độ nghiêm trọng chính</span>
+            </li>
+            <li>
+              <span lang="en">Percent vowels correct (PVC)</span>
+              <span lang="vi">Tỷ lệ nguyên âm chính xác (PVC)</span>
+            </li>
+            <li>
+              <span lang="en">Intelligibility in Context Scale (ICS) — caregiver-rated; 10-language validated including Vietnamese (McLeod, 2014)</span>
+              <span lang="vi">Thang đo mức độ dễ hiểu trong ngữ cảnh (ICS) — do cha mẹ đánh giá; được xác thực bằng 10 ngôn ngữ bao gồm tiếng Việt (McLeod, 2014)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge-purple" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Prosodic / suprasegmental</span>
+            <span lang="vi">Siêu phân đoạn / Ngữ điệu</span>
+          </span>
+          <ul>
+            <li>
+              <span lang="en">Lexical stress accuracy</span>
+              <span lang="vi">Độ chính xác của trọng âm từ</span>
+            </li>
+            <li>
+              <span lang="en">Sentential prosody / intonation contour</span>
+              <span lang="vi">Ngữ điệu câu / Đường nét ngữ điệu</span>
+            </li>
+            <li>
+              <span lang="en">Tone accuracy (lexical tone — critical for Vietnamese, largely absent from Western tools)</span>
+              <span lang="vi">Độ chính xác thanh điệu (thanh điệu từ vựng — quan trọng đối với tiếng Việt, hầu như vắng mặt trong các công cụ phương Tây)</span>
+            </li>
+            <li>
+              <span lang="en">Connected speech naturalness ratings (CASANA scales for CAS)</span>
+              <span lang="vi">Đánh giá mức độ tự nhiên của lời nói liên tục (thang đo CASANA cho chứng bất lực vận động lời nói trẻ em)</span>
+            </li>
+            <li>
+              <span lang="en">Maximum phonation time (MPT) — respiratory support proxy</span>
+              <span lang="vi">Thời gian phát âm tối đa (MPT) — chỉ số gián tiếp cho hoạt động hô hấp</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Digital and telehealth validation landscape</span>
+        <span lang="vi">Bối cảnh kiểm chứng y tế từ xa và kỹ thuật số</span>
+      </h2>
+      <p>
+        <span lang="en">Crucially, multiple RCTs (Grogan-Johnson et al., 2011; Fairweather et al., 2016; Wales et al., 2017) have demonstrated <strong>non-inferiority of telehealth SSD intervention vs. face-to-face</strong> for school-age and preschool children. The SPA's 2020 guidelines operationalize minimum technical requirements (synchronous video, minimum 10Mbps, secure platforms). ASHA's 2021 position paper endorses asynchronous (store-and-forward) protocols for phonological screening — the architectural backbone of the proposed platform.</span>
+        <span lang="vi">Đáng chú ý là nhiều nghiên cứu RCT (Grogan-Johnson et al., 2011; Fairweather et al., 2016; Wales et al., 2017) đã chứng minh <strong>hiệu quả tương đương của can thiệp SSD qua y tế từ xa so với can thiệp trực tiếp</strong> ở học sinh tiểu học và trẻ mầm non. Hướng dẫn năm 2020 của SPA đã cụ thể hóa các yêu cầu kỹ thuật tối thiểu (video đồng bộ, tối thiểu 10Mbps, nền tảng bảo mật). Báo cáo năm 2021 của ASHA cũng ủng hộ các phác đồ sàng lọc ngữ âm không đồng bộ (lưu trữ và chuyển tiếp) — vốn là xương sống kiến trúc của nền tảng được đề xuất.</span>
+      </p>
+
+      <div class="alert alert-success">
+        <strong>
+          <span lang="en">Translatability signal:</span>
+          <span lang="vi">Tín hiệu khả chuyển:</span>
+        </strong>
+        <span lang="en">The ICS (Intelligibility in Context Scale) has been formally validated in Vietnamese (McLeod et al., 2014), making it the single highest-confidence Western assessment tool for immediate platform integration.</span>
+        <span lang="vi">Thang đo ICS (Mức độ dễ hiểu ngữ cảnh) đã được kiểm chứng chính thức tại Việt Nam (McLeod et al., 2014), biến nó thành công cụ đánh giá phương Tây có độ tin cậy cao nhất để tích hợp ngay lập tức vào nền tảng.</span>
+      </div>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(0)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+          <span lang="en">Executive Summary</span>
+          <span lang="vi">Tóm tắt Dự án</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(2)">
+          <span lang="en">Vietnamese Landscape</span>
+          <span lang="vi">Thực trạng Việt Nam</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 3: VIETNAMESE LANDSCAPE -->
+    <section class="section" id="s2">
+      <div class="section-tag">
+        <span lang="en">Section 03 of 07</span>
+        <span lang="vi">Phần 03 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Current Landscape & Constraints in Vietnam</span>
+        <span lang="vi">Thực trạng & Rào cản tại Việt Nam</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Diagnostic ecology · Workforce crisis · Linguistic uniqueness · Systemic bottlenecks</span>
+        <span lang="vi">Hệ sinh thái chẩn đoán · Khủng hoảng nhân lực · Đặc trưng ngôn ngữ · Nút thắt hệ thống</span>
+      </p>
+
+      <div class="alert alert-danger">
+        <strong>
+          <span lang="en">Systemic emergency framing:</span>
+          <span lang="vi">Tình trạng khẩn cấp hệ thống:</span>
+        </strong>
+        <span lang="en">Vietnam's SLP infrastructure is not merely underdeveloped — it is structurally absent for most of the country's 97 million people. This is not a capacity problem amenable to conventional scaling; it requires architectural reinvention of how SSD services are conceptualized and delivered.</span>
+        <span lang="vi">Hạ tầng âm ngữ trị liệu (SLP) tại Việt Nam không chỉ đơn thuần là kém phát triển — nó gần như vắng bóng đối với phần lớn trong số 97 triệu dân. Đây không phải là vấn đề về năng lực có thể giải quyết bằng các phương pháp mở rộng quy mô thông thường; nó đòi hỏi một cuộc cách mạng cấu trúc về cách định hình và phân phối dịch vụ SSD.</span>
+      </div>
+
+      <h2>
+        <span lang="en">Current diagnostic tools in use</span>
+        <span lang="vi">Các công cụ chẩn đoán hiện hành</span>
+      </h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>
+              <span lang="en">Tool</span>
+              <span lang="vi">Công cụ</span>
+            </th>
+            <th>
+              <span lang="en">Origin</span>
+              <span lang="vi">Nguồn gốc</span>
+            </th>
+            <th>
+              <span lang="en">Adaptation status</span>
+              <span lang="vi">Trạng thái thích ứng</span>
+            </th>
+            <th>
+              <span lang="en">Critical limitations in Vietnamese context</span>
+              <span lang="vi">Hạn chế chí tử trong bối cảnh tiếng Việt</span>
+            </th>
+          </tr>
+          <tr>
+            <td><strong>Bayley-III</strong></td>
+            <td>
+              <span lang="en">US (Pearson)</span>
+              <span lang="vi">Mỹ (Pearson)</span>
+            </td>
+            <td>
+              <span lang="en">Informal Vietnamese translation; no re-standardization</span>
+              <span lang="vi">Bản dịch tiếng Việt không chính thức; chưa được chuẩn hóa lại</span>
+            </td>
+            <td>
+              <span lang="en">Language/communication subtests normative invalid; motor/cognitive subtests less affected; tonal phonology entirely unaddressed</span>
+              <span lang="vi">Các bài test phụ về ngôn ngữ/giao tiếp không có giá trị chuẩn hóa; các bài test vận động/nhận thức ít bị ảnh hưởng hơn; thanh điệu hoàn toàn bị bỏ trống</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>PLS-5</strong></td>
+            <td>
+              <span lang="en">US (Pearson)</span>
+              <span lang="vi">Mỹ (Pearson)</span>
+            </td>
+            <td>
+              <span lang="en">Partial Vietnamese translation circulating clinically</span>
+              <span lang="vi">Bản dịch tiếng Việt một phần đang lưu hành lâm sàng</span>
+            </td>
+            <td>
+              <span lang="en">Auditory comprehension items rely on English morphosyntax; expressive communication items omit tone marking; no Vietnamese norms</span>
+              <span lang="vi">Các mục hiểu ngôn ngữ dựa trên cú pháp tiếng Anh; các mục giao tiếp diễn đạt bỏ qua dấu thanh; không có dữ liệu chuẩn hóa Việt Nam</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Custom word lists (clinic-specific)</strong></span>
+              <span lang="vi"><strong>Danh sách từ tự biên (theo phòng khám)</strong></span>
+            </td>
+            <td>
+              <span lang="en">Local Vietnamese SLPs</span>
+              <span lang="vi">SLP bản địa</span>
+            </td>
+            <td>
+              <span lang="en">Informal; not standardized; variable across settings</span>
+              <span lang="vi">Không chính thức; không chuẩn hóa; thay đổi tùy cơ sở</span>
+            </td>
+            <td>
+              <span lang="en">No psychometric properties; criterion validity unestablished; tone accuracy not systematically assessed; no age-band norms</span>
+              <span lang="vi">Không có thuộc tính đo lường tâm lý; tính hiệu lực tiêu chí chưa được thiết lập; độ chính xác thanh điệu chưa được đánh giá hệ thống; không có dữ liệu theo nhóm tuổi</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en"><strong>Vietnamese Articulation Tests (VAT — multiple variants)</strong></span>
+              <span lang="vi"><strong>Bài test cấu âm tiếng Việt (VAT — nhiều biến thể)</strong></span>
+            </td>
+            <td>
+              <span lang="en">Vietnamese academic groups (Hanoi Medical University, others)</span>
+              <span lang="vi">Nhóm học thuật Việt Nam (ĐH Y Hà Nội, v.v.)</span>
+            </td>
+            <td>
+              <span lang="en">Research-grade; limited clinical dissemination</span>
+              <span lang="vi">Cấp độ nghiên cứu; phổ biến lâm sàng hạn chế</span>
+            </td>
+            <td>
+              <span lang="en">Northern dialect bias; small normative samples (n&lt;200 in most studies); not validated for Southern/Central dialects; tone assessment superficial</span>
+              <span lang="vi">Thiên lệch về giọng Bắc; cỡ mẫu chuẩn hóa nhỏ (n&lt;200 trong hầu hết các nghiên cứu); chưa kiểm chứng giọng Nam/Trung; đánh giá thanh điệu còn hời hợt</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>ICS (Intelligibility in Context Scale)</strong></td>
+            <td>McLeod et al.</td>
+            <td>
+              <span lang="en">Formally validated in Vietnamese (2014)</span>
+              <span lang="vi">Đã kiểm chứng chính thức bằng tiếng Việt (2014)</span>
+            </td>
+            <td>
+              <span lang="en">Caregiver-rated only; no phoneme-level precision; severity proxy rather than diagnostic instrument</span>
+              <span lang="vi">Chỉ do người chăm sóc đánh giá; không có độ chính xác cấp âm vị; chỉ mang tính đo lường gián tiếp mức độ nghiêm trọng thay vì là công cụ chẩn đoán chuyên sâu</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h2>
+        <span lang="en">The Vietnamese phonological system — clinical specifics</span>
+        <span lang="vi">Hệ thống ngữ âm tiếng Việt — chi tiết lâm sàng đặc thù</span>
+      </h2>
+      <p>
+        <span lang="en">Understanding Vietnamese phonology is prerequisite to any SSD platform design. Vietnamese is a <strong>monosyllabic, register tone language</strong> with six distinct lexical tones in the Northern dialect (five in Southern). Each syllable carries one of these tones, which is phonemically contrastive — changing tone changes word meaning entirely.</span>
+        <span lang="vi">Hiểu rõ ngữ âm tiếng Việt là điều kiện tiên quyết cho việc thiết kế bất kỳ nền tảng SSD nào. Tiếng Việt là một <strong>ngôn ngữ đơn âm tiết có thanh điệu</strong> với 6 thanh phân biệt ở giọng Bắc (5 thanh ở giọng Nam). Mỗi âm tiết mang một thanh điệu có tính đối lập âm vị — thay đổi thanh điệu sẽ thay đổi hoàn toàn nghĩa của từ.</span>
+      </p>
+
+      <div class="card">
+        <h3>
+          <span lang="en">Six Vietnamese tones — clinical profile</span>
+          <span lang="vi">Sáu thanh điệu tiếng Việt — hồ sơ lâm sàng</span>
+        </h3>
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Tone name</span>
+                <span lang="vi">Tên thanh</span>
+              </th>
+              <th>
+                <span lang="en">Diacritic</span>
+                <span lang="vi">Dấu thanh</span>
+              </th>
+              <th>
+                <span lang="en">F0 contour</span>
+                <span lang="vi">Quỹ đạo tần số F0</span>
+              </th>
+              <th>
+                <span lang="en">Phonation type</span>
+                <span lang="vi">Loại cấu âm</span>
+              </th>
+              <th>
+                <span lang="en">SSD clinical significance</span>
+                <span lang="vi">Ý nghĩa lâm sàng SSD</span>
+              </th>
+            </tr>
+            <tr>
+              <td><strong>Ngang (level)</strong></td>
+              <td>
+                <span lang="en">— (none)</span>
+                <span lang="vi">Không</span>
+              </td>
+              <td>
+                <span lang="en">Mid-level, flat</span>
+                <span lang="vi">Trung bình, bằng phẳng</span>
+              </td>
+              <td>
+                <span lang="en">Modal, steady</span>
+                <span lang="vi">Bình thường, ổn định</span>
+              </td>
+              <td>
+                <span lang="en">Baseline reference; rarely disordered in isolation</span>
+                <span lang="vi">Mốc tham chiếu; hiếm khi bị rối loạn đơn lẻ</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Huyền (falling)</strong></td>
+              <td>à</td>
+              <td>
+                <span lang="en">Low-falling</span>
+                <span lang="vi">Thấp, đi xuống</span>
+              </td>
+              <td>
+                <span lang="en">Breathy/creaky</span>
+                <span lang="vi">Hơi thở/khe khẽ</span>
+              </td>
+              <td>
+                <span lang="en">Phonation quality errors common; breathy component affected in respiratory deficits</span>
+                <span lang="vi">Lỗi chất lượng cấu âm phổ biến; thành phần hơi thở bị ảnh hưởng khi có suy giảm hô hấp</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Sắc (rising)</strong></td>
+              <td>á</td>
+              <td>
+                <span lang="en">Mid-high rising</span>
+                <span lang="vi">Trung-cao, đi lên</span>
+              </td>
+              <td>
+                <span lang="en">Modal, tense</span>
+                <span lang="vi">Bình thường, căng thẳng</span>
+              </td>
+              <td>
+                <span lang="en">Prosodic motor planning issues; confused with ngã by CAS children</span>
+                <span lang="vi">Các vấn đề lập kế hoạch vận động siêu phân đoạn; trẻ mắc CAS dễ nhầm lẫn với thanh Ngã</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Hỏi (dipping-rising)</strong></td>
+              <td>ả</td>
+              <td>
+                <span lang="en">Mid-dip-rise (glottalized)</span>
+                <span lang="vi">Xuống rồi lên (nghẽn thanh quản)</span>
+              </td>
+              <td>
+                <span lang="en">Modal with glottalization</span>
+                <span lang="vi">Bình thường kết hợp nghẽn thanh quản</span>
+              </td>
+              <td>
+                <span lang="en">Complex F0 trajectory; frequent error target in phonological disorders</span>
+                <span lang="vi">Đường nét F0 phức tạp; đối tượng lỗi thường gặp trong các rối loạn âm vị</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Ngã (rising-broken)</strong></td>
+              <td>ã</td>
+              <td>
+                <span lang="en">High-rising with creaky break</span>
+                <span lang="vi">Cao đi lên có đứt quãng nghẽn</span>
+              </td>
+              <td>
+                <span lang="en">Creaky/laryngealized</span>
+                <span lang="vi">Khe khẽ/tắc thanh quản</span>
+              </td>
+              <td>
+                <span lang="en">Highest clinical complexity; requires glottal control + F0 rise; Kodály targeting priority</span>
+                <span lang="vi">Độ phức tạp lâm sàng cao nhất; đòi hỏi kiểm soát thanh môn + tăng F0; ưu tiên mục tiêu phương pháp Kodály</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Nặng (falling-heavy)</strong></td>
+              <td>ạ</td>
+              <td>
+                <span lang="en">Low-falling, constricted</span>
+                <span lang="vi">Thấp đi xuống, thắt lại</span>
+              </td>
+              <td>
+                <span lang="en">Creaky, abrupt offset</span>
+                <span lang="vi">Khe khẽ, ngắt đột ngột</span>
+              </td>
+              <td>
+                <span lang="en">Glottal constriction deficit marker; confused with huyền in SSD</span>
+                <span lang="vi">Chỉ dấu khiếm khuyết khép thanh môn; dễ nhầm lẫn với thanh Huyền trong SSD</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>
+        <span lang="en">Consonant and vowel inventory highlights</span>
+        <span lang="vi">Những điểm nổi bật về hệ thống phụ âm và nguyên âm</span>
+      </h3>
+      <div class="two-col">
+        <div class="card">
+          <span class="badge badge-coral" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Final consonants</span>
+            <span lang="vi">Phụ âm cuối</span>
+          </span>
+          <p style="font-size:13px; margin-bottom:0.5rem">
+            <span lang="en">Vietnamese final consonants are highly restricted — only /p t k m n ŋ/ and the glides /j w/ are permitted in coda position. Final /-ŋ/ and /-nh/ (palatalized nasal) are high-frequency clinical error targets.</span>
+            <span lang="vi">Phụ âm cuối tiếng Việt bị giới hạn nghiêm ngặt — chỉ có /p t k m n ŋ/ và các bán nguyên âm /j w/ được phép ở vị trí cuối. Phụ âm cuối /-ng/ và /-nh/ là các mục tiêu lỗi lâm sàng tần suất cao.</span>
+          </p>
+          <ul>
+            <li>
+              <span class="inline-code">-ng</span>
+              <span lang="en"> (velar nasal): high-frequency coda; common omission/substitution target</span>
+              <span lang="vi"> (ngạc mềm mũi): phụ âm cuối tần suất cao; mục tiêu phổ biến của hiện tượng lược bỏ/thay thế</span>
+            </li>
+            <li>
+              <span class="inline-code">-nh</span>
+              <span lang="en"> (palatal nasal): dialectally variable; Southern speakers frequently substitute /n/</span>
+              <span lang="vi"> (ngạc mũi): biến thể phương ngữ; người miền Nam thường thay thế bằng /n/</span>
+            </li>
+            <li>
+              <span class="inline-code">-ch</span>
+              <span lang="en"> (palatal stop): complex articulation; prevalent articulation error target in young children</span>
+              <span lang="vi"> (ngạc tắc): cấu âm phức tạp; lỗi cấu âm thường gặp ở trẻ nhỏ</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge-teal" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Initial consonant clusters</span>
+            <span lang="vi">Phụ âm đầu ghép</span>
+          </span>
+          <p style="font-size:13px; margin-bottom:0.5rem">
+            <span lang="en">Vietnamese lacks consonant clusters (no CCVC structures); this means cluster reduction — a major English SSD phonological process — is not applicable. Instead, attention shifts to:</span>
+            <span lang="vi">Tiếng Việt hoàn toàn không có tổ hợp phụ âm (không có cấu trúc CCVC); điều này có nghĩa là quá trình đơn giản hóa tổ hợp phụ âm — một lỗi ngữ âm lớn trong tiếng Anh — không tồn tại. Thay vào đó, sự chú ý chuyển sang:</span>
+          </p>
+          <ul>
+            <li>
+              <span lang="en">Initial affricate accuracy (<span class="inline-code">tr-</span>, <span class="inline-code">ch-</span>)</span>
+              <span lang="vi">Độ chính xác của các phụ âm tắc - xát đầu (<span class="inline-code">tr-</span>, <span class="inline-code">ch-</span>)</span>
+            </li>
+            <li>
+              <span lang="en">Aspiration distinctions (dialectal)</span>
+              <span lang="vi">Sự khác biệt về bật hơi (theo phương ngữ)</span>
+            </li>
+            <li>
+              <span lang="en">The retroflex vs. dental /s/ contrast (Northern vs. Southern)</span>
+              <span lang="vi">Sự đối lập giữa âm quặt lưỡi và âm răng /s/ (giọng Bắc vs. giọng Nam)</span>
+            </li>
+            <li>
+              <span lang="en">Labiodental /v/ vs. bilabial /b/ confusion in young children</span>
+              <span lang="vi">Sự nhầm lẫn âm môi-răng /v/ với âm hai môi /b/ ở trẻ nhỏ</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Systemic bottlenecks</span>
+        <span lang="vi">Các nút thắt hệ thống</span>
+      </h2>
+      <div class="matrix-grid">
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Workforce</span>
+            <span lang="vi">Nhân lực</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">No dedicated SLP degree program existed nationally until ~2010</span>
+              <span lang="vi">Chưa từng có chương trình đào tạo cử nhân SLP chuyên biệt trong nước cho đến khoảng năm 2010</span>
+            </li>
+            <li>
+              <span lang="en">Most practitioners cross-trained from education, medicine, or psychology</span>
+              <span lang="vi">Hầu hết người hành nghề được chuyển ngành từ sư phạm, y khoa hoặc tâm lý học</span>
+            </li>
+            <li>
+              <span lang="en">Geographic clustering: ~80% of SLPs in Hanoi and Ho Chi Minh City</span>
+              <span lang="vi">Phân bố địa lý lệch: ~80% chuyên viên SLP tập trung tại Hà Nội và TP. Hồ Chí Minh</span>
+            </li>
+            <li>
+              <span lang="en">No regulatory licensure framework — practice is largely unregulated</span>
+              <span lang="vi">Chưa có khung cấp phép hành nghề chuẩn hóa — hoạt động lâm sàng còn tự phát</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Normative data</span>
+            <span lang="vi">Dữ liệu chuẩn hóa</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">No nationally standardized phonological acquisition norms</span>
+              <span lang="vi">Chưa có dữ liệu chuẩn hóa quốc gia về quá trình phát triển ngữ âm trẻ em</span>
+            </li>
+            <li>
+              <span lang="en">Existing studies use Northern dialect samples only</span>
+              <span lang="vi">Các nghiên cứu hiện tại hầu như chỉ sử dụng mẫu nghiên cứu ở giọng Bắc</span>
+            </li>
+            <li>
+              <span lang="en">Age of acquisition data for Vietnamese tones highly incomplete</span>
+              <span lang="vi">Dữ liệu về độ tuổi tiếp thu thanh điệu tiếng Việt còn rất sơ sài</span>
+            </li>
+            <li>
+              <span lang="en">Dialect variation (Northern/Central/Southern) uncontrolled in all existing data</span>
+              <span lang="vi">Biến thể phương ngữ (Bắc/Trung/Nam) chưa được kiểm soát trong các dữ liệu hiện có</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Cultural / access</span>
+            <span lang="vi">Văn hóa / Tiếp cận</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Significant stigma around developmental diagnoses; late presentation common</span>
+              <span lang="vi">Sự kỳ thị đối với các chẩn đoán phát triển còn nặng nề; trẻ thường đi khám rất muộn</span>
+            </li>
+            <li>
+              <span lang="en">Urban/rural access disparity extreme — rural families travel 100–400km for assessment</span>
+              <span lang="vi">Khoảng cách tiếp cận đô thị/nông thôn cực đoan — gia đình ở nông thôn phải di chuyển 100-400km để đi khám</span>
+            </li>
+            <li>
+              <span lang="en">Economic barriers: private SLP sessions 300,000–800,000 VND/hour (unsubsidized)</span>
+              <span lang="vi">Rào cản kinh tế: các buổi can thiệp SLP tư nhân có giá từ 300.000 đến 800.000 VND/giờ (không được hỗ trợ)</span>
+            </li>
+            <li>
+              <span lang="en">National health insurance (BHYT) does not reliably cover SLP services</span>
+              <span lang="vi">Bảo hiểm y tế quốc gia (BHYT) chưa chi trả cho dịch vụ âm ngữ trị liệu</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Diagnostic tool gaps</span>
+            <span lang="vi">Thiếu hụt công cụ chẩn đoán</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">No standardized, tonal-aware articulation test with Vietnamese norms</span>
+              <span lang="vi">Thiếu bài test cấu âm chuẩn hóa, có xét đến thanh điệu cho tiếng Việt</span>
+            </li>
+            <li>
+              <span lang="en">No validated Connected Speech sample protocol for Vietnamese</span>
+              <span lang="vi">Chưa có quy trình lấy mẫu connected speech (lời nói liên tục) được kiểm chứng</span>
+            </li>
+            <li>
+              <span lang="en">No screening tools for CAS adapted to tonal phonology</span>
+              <span lang="vi">Thiếu công cụ sàng lọc CAS tương thích với ngữ âm thanh điệu</span>
+            </li>
+            <li>
+              <span lang="en">No caregiver-completed developmental communication checklist with Vietnamese norms</span>
+              <span lang="vi">Thiếu bảng kiểm phát triển giao tiếp do cha mẹ hoàn thiện có chuẩn hóa Việt Nam</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(1)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+          <span lang="en">Global Best Practices</span>
+          <span lang="vi">Quy chuẩn Quốc tế</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(3)">
+          <span lang="en">Gap Analysis</span>
+          <span lang="vi">Phân tích Khoảng trống</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 4: GAP ANALYSIS -->
+    <section class="section" id="s3">
+      <div class="section-tag">
+        <span lang="en">Section 04 of 07</span>
+        <span lang="vi">Phần 04 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Gap Analysis & Translatability</span>
+        <span lang="vi">Phân tích Khoảng trống & Khả năng Thích ứng</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Cross-referencing global best practices with Vietnamese constraints · Adaptation pathways · RSMM/Kodály integration</span>
+        <span lang="vi">Đối chiếu quy chuẩn quốc tế với thực trạng tại Việt Nam · Định hướng thích ứng · Tích hợp mô hình can thiệp RSMM/Kodály</span>
+      </p>
+
+      <h2>
+        <span lang="en">Translatability matrix</span>
+        <span lang="vi">Ma trận khả năng chuyển đổi thích ứng</span>
+      </h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>
+              <span lang="en">Global best practice element</span>
+              <span lang="vi">Yếu tố quy chuẩn quốc tế</span>
+            </th>
+            <th>
+              <span lang="en">Translatability to Vietnam</span>
+              <span lang="vi">Khả năng thích ứng tại Việt Nam</span>
+            </th>
+            <th>
+              <span lang="en">Adaptation required</span>
+              <span lang="vi">Yêu cầu thích ứng cụ thể</span>
+            </th>
+          </tr>
+          <tr>
+            <td><strong>ICS (Intelligibility in Context Scale)</strong></td>
+            <td><span class="badge badge-green"><span lang="en">High — validated</span><span lang="vi">Cao — Đã kiểm chứng</span></span></td>
+            <td>
+              <span lang="en">Minimal; already formally validated in Vietnamese; dialect sensitivity check needed for Central dialect</span>
+              <span lang="vi">Rất ít; đã được chuẩn hóa chính thức bằng tiếng Việt; chỉ cần kiểm tra độ nhạy phương ngữ đối với giọng miền Trung</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Caregiver-mediated intervention model (PACT, Hanen)</span>
+              <span lang="vi">Mô hình can thiệp do cha mẹ hỗ trợ (PACT, Hanen)</span>
+            </td>
+            <td><span class="badge badge-green"><span lang="en">High — structural fit</span><span lang="vi">Cao — Tương thích cấu trúc</span></span></td>
+            <td>
+              <span lang="en">Content adaptation required; Vietnamese parent-child interaction norms differ; collectivist family roles must be accommodated (grandparent as primary caregiver context)</span>
+              <span lang="vi">Cần điều chỉnh nội dung; các chuẩn mực tương tác cha mẹ - con cái của người Việt có sự khác biệt; phải tích hợp vai trò gia đình tam đại đồng đường (bối cảnh ông bà là người chăm sóc chính)</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Telehealth/asynchronous phonological screening</span>
+              <span lang="vi">Sàng lọc ngữ âm qua y tế từ xa/không đồng bộ</span>
+            </td>
+            <td><span class="badge badge-green"><span lang="en">High — infrastructure fit</span><span lang="vi">Cao — Tương thích hạ tầng</span></span></td>
+            <td>
+              <span lang="en">Vietnam smartphone penetration ~73% (2023); 4G coverage 95%+ urban, 60%+ rural; latency and bandwidth constraints in mountainous rural regions require asynchronous (store-and-forward) architecture</span>
+              <span lang="vi">Tỷ lệ phổ cập smartphone tại Việt Nam ~73% (2023); phủ sóng 4G đạt 95%+ ở đô thị và 60%+ ở nông thôn; giới hạn băng thông ở miền núi đòi hỏi kiến trúc lưu trữ và chuyển tiếp (không đồng bộ)</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">PCC (Percent Consonants Correct) as severity metric</span>
+              <span lang="vi">Tỷ lệ PCC (Phụ âm chính xác) làm thước đo mức độ</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">Moderate — adaptation needed</span><span lang="vi">Trung bình — Cần sửa đổi</span></span></td>
+            <td>
+              <span lang="en">Vietnamese consonant inventory differs structurally from English; must be recalculated against Vietnamese phoneme set; PCC-Vietnamese must weight coda consonants appropriately; tone accuracy must be added as a parallel metric (PTC — Percent Tone Correct)</span>
+              <span lang="vi">Hệ thống phụ âm tiếng Việt khác biệt cấu trúc so với tiếng Anh; phải tính toán lại dựa trên bảng âm vị tiếng Việt; PCC tiếng Việt cần tính trọng số phù hợp cho phụ âm cuối; phải bổ sung độ chính xác thanh điệu (PTC — Percent Tone Correct) như một chỉ số song song</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Phonological process analysis</span>
+              <span lang="vi">Phân tích tiến trình ngữ âm</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">Moderate — restructuring needed</span><span lang="vi">Trung bình — Cần tái cấu trúc</span></span></td>
+            <td>
+              <span lang="en">Standard English processes (cluster reduction, final consonant deletion) do not apply; Vietnamese-specific processes must be operationalized: tone reduction/neutralization, coda nasalization errors, syllable-initial affricate substitutions, glottal stop insertion</span>
+              <span lang="vi">Các lỗi ngữ âm tiếng Anh tiêu chuẩn (lược tổ hợp phụ âm, mất phụ âm cuối) không thể áp dụng; phải vận hành hóa các lỗi đặc thù tiếng Việt: giảm/trung hòa thanh điệu, lỗi mũi hóa phụ âm cuối, thay thế âm tắc-xát đầu, chèn âm tắc thanh môn</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">GFTA-3 / DEAP (standardized articulation tests)</span>
+              <span lang="vi">GFTA-3 / DEAP (Bài test cấu âm chuẩn hóa)</span>
+            </td>
+            <td><span class="badge badge-red"><span lang="en">Low — not transferable</span><span lang="vi">Thấp — Không thể chuyển giao</span></span></td>
+            <td>
+              <span lang="en">English phoneme elicitation pictures/words have no Vietnamese equivalents; normative data entirely invalid; must be rebuilt from ground up with Vietnamese word corpus</span>
+              <span lang="vi">Hình ảnh/từ kích thích âm vị tiếng Anh không có tương đương tiếng Việt; dữ liệu chuẩn hóa hoàn toàn vô hiệu; bắt buộc phải xây dựng lại từ đầu bằng kho từ vựng tiếng Việt bản địa</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">CAS diagnosis (ReST, Nuffield DP-3)</span>
+              <span lang="vi">Chẩn đoán CAS (ReST, Nuffield DP-3)</span>
+            </td>
+            <td><span class="badge badge-red"><span lang="en">Low — requires original research</span><span lang="vi">Thấp — Cần nghiên cứu gốc</span></span></td>
+            <td>
+              <span lang="en">CAS in tonal languages is clinically under-described; existing CAS diagnostic criteria (ASHA 2007; CASANA) were developed on non-tonal languages; tonal inconsistency as a CAS marker in Vietnamese is entirely unvalidated</span>
+              <span lang="vi">Chứng bất lực vận động lời nói (CAS) ở các ngôn ngữ thanh điệu chưa được mô tả lâm sàng đầy đủ; các tiêu chí chẩn đoán CAS hiện hành (ASHA 2007; CASANA) được xây dựng trên các ngôn ngữ không thanh điệu; dấu hiệu không nhất quán thanh điệu làm chỉ báo CAS trong tiếng Việt hoàn toàn chưa được kiểm chứng</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Music/rhythm-based interventions (general)</span>
+              <span lang="vi">Can thiệp âm nhạc/nhịp điệu (nói chung)</span>
+            </td>
+            <td><span class="badge badge-teal"><span lang="en">High — strategic alignment</span><span lang="vi">Cao — Liên kết chiến lược</span></span></td>
+            <td>
+              <span lang="en">Vietnam has rich indigenous musical tradition; Quan họ, Đờn ca tài tử, and Hát ru (lullabies) provide a deep melodic/tonal cultural substrate; RSMM/Kodály approach maps directly onto this; musical mother tongue concept is operationally valid</span>
+              <span lang="vi">Việt Nam có truyền thống âm nhạc bản địa phong phú; Quan họ, Đờn ca tài tử và Hát ru cung cấp một chất liệu giai điệu/thanh điệu văn hóa sâu sắc; phương pháp RSMM/Kodály tương thích trực tiếp với điều này; khái niệm "tiếng mẹ đẻ âm nhạc" hoàn toàn khả thi trên thực tế</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h2>
+        <span lang="en">Adapting Western frameworks to Vietnamese phonology</span>
+        <span lang="vi">Thích ứng các khung làm việc phương Tây vào ngữ âm tiếng Việt</span>
+      </h2>
+
+      <h3>
+        <span lang="en">The tone-phoneme equivalence problem</span>
+        <span lang="vi">Vấn đề tương đương thanh điệu - âm vị</span>
+      </h3>
+      <p>
+        <span lang="en">Western SSD frameworks conceptualize phonemes as segments (consonants and vowels). In Vietnamese, the <strong>tone is itself a phoneme</strong> — it is not a prosodic overlay but a segmental feature. The clinical consequence is that a child with a tonal SSD is not making prosodic errors; they are making <em>lexical contrast errors</em> equivalent to substituting /p/ for /b/ in English. This distinction is invisible to all current Western assessment tools and demands native re-architecture of evaluation logic.</span>
+        <span lang="vi">Các khung làm việc SSD phương Tây quan niệm âm vị là các đoạn đoạn tính (phụ âm và nguyên âm). Trong tiếng Việt, <strong>bản thân thanh điệu là một âm vị</strong> — nó không phải là một lớp phủ siêu đoạn tính mà là một đặc tính phân đoạn cốt lõi. Hệ quả lâm sàng là một đứa trẻ gặp lỗi SSD về thanh điệu không phải đang gặp lỗi ngữ điệu; chúng đang gặp <em>lỗi đối lập từ vựng</em>, tương đương với việc phát âm lệch /p/ thành /b/ trong tiếng Anh. Sự khác biệt này hoàn toàn vô hình đối với tất cả các công cụ đánh giá phương Tây hiện nay và đòi hỏi phải tái cấu trúc tự nhiên toàn bộ logic đánh giá ngữ âm bản địa.</span>
+      </p>
+
+      <div class="alert alert-info">
+        <strong>
+          <span lang="en">Proposed metric: PTC (Percent Tone Correct)</span>
+          <span lang="vi">Chỉ số đề xuất: PTC (Percent Tone Correct)</span>
+        </strong>
+        <span lang="en"> — an original metric analogous to PCC, calculated as (number of correctly produced tones / total tone opportunities) × 100. Must be stratified by tone type (ngã and hỏi predicted to show lowest accuracy in SSD due to phonatory complexity). This is a novel clinical metric requiring validation.</span>
+        <span lang="vi"> — một chỉ số nguyên bản tương tự như PCC, được tính bằng (số thanh điệu sản xuất chính xác / tổng cơ hội phát âm thanh điệu) × 100. Cần được phân tầng theo loại thanh điệu (thanh ngã và thanh hỏi được dự báo là có độ chính xác thấp nhất ở trẻ SSD do độ phức tạp trong cấu âm). Đây là một chỉ số lâm sàng hoàn toàn mới cần được nghiên cứu và kiểm chứng.</span>
+      </div>
+
+      <h3>
+        <span lang="en">RSMM/Kodály intervention adaptation architecture</span>
+        <span lang="vi">Kiến trúc thích ứng can thiệp RSMM/Kodály</span>
+      </h3>
+      <div class="card">
+        <h3>
+          <span lang="en">Mapping Vietnamese tones to Kodály melodic contours</span>
+          <span lang="vi">Đối chiếu thanh điệu tiếng Việt với các đường nét giai điệu Kodály</span>
+        </h3>
+        <p style="font-size:13px; color:var(--color-text-secondary); margin-bottom:1rem">
+          <span lang="en">The Kodály "Musical Mother Tongue" principle holds that the child's indigenous folk music encodes the tonal/rhythmic patterns of their native language. For Vietnamese, this is operationally powerful because folk song melodic contours directly mirror lexical tone F0 trajectories.</span>
+          <span lang="vi">Nguyên lý "Tiếng mẹ đẻ âm nhạc" của Kodály cho rằng âm nhạc dân gian bản địa của trẻ mã hóa các mô hình thanh điệu/nhịp điệu của tiếng mẹ đẻ. Đối với tiếng Việt, điều này cực kỳ hiệu quả vì các đường nét giai điệu dân ca phản ánh trực tiếp quỹ đạo tần số F0 của thanh điệu từ vựng.</span>
+        </p>
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Vietnamese tone</span>
+                <span lang="vi">Thanh điệu</span>
+              </th>
+              <th>
+                <span lang="en">F0 trajectory</span>
+                <span lang="vi">Quỹ đạo tần số F0</span>
+              </th>
+              <th>
+                <span lang="en">Kodály melodic mapping</span>
+                <span lang="vi">Phân bố giai điệu Kodály</span>
+              </th>
+              <th>
+                <span lang="en">Orff-Schulwerk activation</span>
+                <span lang="vi">Kích hoạt Orff-Schulwerk</span>
+              </th>
+              <th>
+                <span lang="en">Target folk song corpus</span>
+                <span lang="vi">Kho dữ liệu dân ca mục tiêu</span>
+              </th>
+            </tr>
+            <tr>
+              <td><strong>Ngang</strong></td>
+              <td>
+                <span lang="en">Mid flat</span>
+                <span lang="vi">Trung bình, bằng phẳng</span>
+              </td>
+              <td>
+                <span lang="en">Sustained single pitch (sol or mi); whole note hold exercise</span>
+                <span lang="vi">Duy trì một nốt nhạc duy nhất (Sol hoặc Mi); bài tập ngân dài cả nốt tròn</span>
+              </td>
+              <td>
+                <span lang="en">Steady pulse body percussion (clap on beat); continuous airflow activation</span>
+                <span lang="vi">Gõ nhịp cơ thể đều đặn (vỗ tay theo phách); kích hoạt dòng khí liên tục</span>
+              </td>
+              <td>
+                <span lang="en">Simple lullabies (Hát ru miền Bắc)</span>
+                <span lang="vi">Các điệu hát ru đơn giản (Hát ru miền Bắc)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Huyền</strong></td>
+              <td>
+                <span lang="en">Low-falling + breathy phonation</span>
+                <span lang="vi">Thấp đi xuống + hơi thở</span>
+              </td>
+              <td>
+                <span lang="en">Descending 2-note figure (sol→mi); diminuendo to pianissimo</span>
+                <span lang="vi">Đường nét đi xuống 2 nốt (Sol→Mi); giảm dần âm lượng đến cực nhỏ</span>
+              </td>
+              <td>
+                <span lang="en">Weighted downward arm gesture; breath management: long sustained exhale</span>
+                <span lang="vi">Động tác tay đưa xuống chậm rãi; quản lý hơi thở: thở ra dài hơi và đều đặn</span>
+              </td>
+              <td>
+                <span lang="en">Slow cradle songs; Ví giặm</span>
+                <span lang="vi">Hát ru chậm; Hát ví, giặm</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Sắc</strong></td>
+              <td>
+                <span lang="en">Mid-high rising</span>
+                <span lang="vi">Trung-cao đi lên</span>
+              </td>
+              <td>
+                <span lang="en">Ascending 2-note figure (mi→sol or do→mi); crescendo</span>
+                <span lang="vi">Đường nét đi lên 2 nốt (Mi→Sol hoặc Đồ→Mi); tăng dần âm lượng</span>
+              </td>
+              <td>
+                <span lang="en">Upward arm sweep; staccato foot tap on apex</span>
+                <span lang="vi">Động tác tay quét lên cao; dậm chân staccato ở đỉnh nốt nhạc</span>
+              </td>
+              <td>
+                <span lang="en">Upbeat children's songs; Lý cây xanh</span>
+                <span lang="vi">Các bài đồng dao sôi động; Lý cây xanh</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Hỏi</strong></td>
+              <td>
+                <span lang="en">Dip then rise (glottalized mid-point)</span>
+                <span lang="vi">Xuống rồi lên (nghẽn thanh quản giữa)</span>
+              </td>
+              <td>
+                <span lang="en">3-note contour: mi→re→sol; valley-peak shape</span>
+                <span lang="vi">Đường nét 3 nốt: Mi→Rê→Sol; hình thung lũng - đỉnh</span>
+              </td>
+              <td>
+                <span lang="en">Dip-and-rise body gesture; glottal onset training via percussive vocalization</span>
+                <span lang="vi">Động tác cơ thể nhún xuống rồi vươn lên; rèn luyện khởi đầu thanh môn qua giọng gõ phách vocal</span>
+              </td>
+              <td>
+                <span lang="en">Question-form folk songs; call-and-response structures</span>
+                <span lang="vi">Các bài hát đối đáp hỏi-đáp; cấu trúc gọi - đáp</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Ngã</strong> <span class="badge badge-red"><span lang="en">Priority</span><span lang="vi">Ưu tiên</span></span></td>
+              <td>
+                <span lang="en">Rising with laryngeal break/creaky</span>
+                <span lang="vi">Cao đi lên đứt quãng / tắc</span>
+              </td>
+              <td>
+                <span lang="en">4-note ascending figure with rhythmic interruption (do→mi→sol with rest); tonal disruption encoded as musical rest</span>
+                <span lang="vi">Đường nét đi lên 4 nốt kèm đứt quãng nhịp điệu (Đồ→Mi→Sol có dấu lặng); sự đứt gãy thanh điệu được mã hóa thành dấu lặng âm nhạc</span>
+              </td>
+              <td>
+                <span lang="en">Rising arm gesture + sudden freeze; glottal articulation via stop consonant chaining; finger cymbal on break point</span>
+                <span lang="vi">Động tác vươn tay + đột ngột dừng lại; cấu âm thanh môn qua chuỗi phụ âm tắc; gõ xanh-panh ở thời điểm ngắt giọng</span>
+              </td>
+              <td>
+                <span lang="en">Complex rhythmic folk songs; Quan họ Bắc Ninh duets</span>
+                <span lang="vi">Các làn điệu dân ca nhịp điệu phức tạp; Quan họ Bắc Ninh đối đáp</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Nặng</strong></td>
+              <td>
+                <span lang="en">Low-falling, abrupt/constricted</span>
+                <span lang="vi">Thấp đi xuống, thắt lại</span>
+              </td>
+              <td>
+                <span lang="en">Descending 2-note (sol→do); heavy accent, marcato; abrupt cut-off</span>
+                <span lang="vi">Đi xuống 2 nốt (Sol→Đồ); nhấn mạnh marcato; ngắt giọng đột ngột</span>
+              </td>
+              <td>
+                <span lang="en">Weighted downward stomp; breath: sharp exhalation exercise; final consonant closure training</span>
+                <span lang="vi">Động tác dậm chân mạnh mẽ xuống đất; bài tập thở ra đột ngột; rèn luyện khép âm vị cuối</span>
+              </td>
+              <td>
+                <span lang="en">Heavy-beat folk songs; work songs (Hò)</span>
+                <span lang="vi">Các điệu hò lao động có nhịp nhấn mạnh</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>
+        <span lang="en">Caregiver training as primary delivery vehicle</span>
+        <span lang="vi">Đào tạo người chăm sóc làm phương tiện truyền tải chính</span>
+      </h3>
+      <p>
+        <span lang="en">Given the SLP workforce deficit, the platform must operationalize <strong>caregiver-as-clinician-extender</strong> frameworks. Evidence from Hanen, PACT, and FOCAL demonstrates that well-trained caregivers achieve outcomes within 10–15% of trained SLP outcomes when provided with structured, fidelity-monitored protocols. The platform should:</span>
+        <span lang="vi">Với tình trạng khan hiếm nhân lực SLP, nền tảng bắt buộc phải vận hành hóa các phác đồ <strong>người chăm sóc đóng vai trò mở rộng lâm sàng</strong>. Bằng chứng từ các phương pháp Hanen, PACT và FOCAL chứng minh rằng những người chăm sóc được đào tạo bài bản có thể đạt được kết quả trị liệu tương đương 85% đến 90% so với chuyên viên SLP chuyên nghiệp, khi được cung cấp các quy trình cấu trúc và sự giám sát độ chính xác thực hiện chặt chẽ. Nền tảng sẽ:</span>
+      </p>
+      <ul>
+        <li>
+          <span lang="en">Deliver microlearning modules (3–7 minutes each) in Vietnamese, teaching caregivers specific intervention techniques</span>
+          <span lang="vi">Cung cấp các mô-đun học tập ngắn (microlearning) chỉ từ 3-7 phút bằng tiếng Việt, hướng dẫn chi tiết các kỹ thuật can thiệp cụ thể cho cha mẹ</span>
+        </li>
+        <li>
+          <span lang="en">Use video modeling (showing correct elicitation technique with a Vietnamese child actor) rather than text instruction</span>
+          <span lang="vi">Sử dụng video mẫu (ghi hình kỹ thuật kích âm chuẩn do một diễn viên nhí Việt Nam thực hiện) thay vì hướng dẫn bằng chữ</span>
+        </li>
+        <li>
+          <span lang="en">Implement fidelity checklists — caregiver records home sessions; AI analyzes audio for technique compliance</span>
+          <span lang="vi">Triển khai bảng kiểm độ chính xác can thiệp — cha mẹ ghi lại các buổi can thiệp tại nhà và AI sẽ phân tích âm thanh để đánh giá sự tuân thủ kỹ thuật</span>
+        </li>
+        <li>
+          <span lang="en">Establish escalation triggers: if a child shows no progress after 8 sessions or screens positive for CAS/dysarthria markers, automatic referral pathway is activated</span>
+          <span lang="vi">Thiết lập các ngưỡng kích hoạt chuyển tuyến: nếu trẻ không tiến bộ sau 8 buổi hoặc phát hiện các chỉ dấu CAS/loạn vận ngôn, quy trình tự động chuyển tuyến chuyên sâu sẽ được kích hoạt</span>
+        </li>
+        <li>
+          <span lang="en">Account for multigenerational caregiving norms: modules designed for grandparent literacy levels and engagement styles, not just young parents</span>
+          <span lang="vi">Tích hợp các chuẩn mực chăm sóc đa thế hệ: các mô-đun can thiệp được tinh chỉnh để phù hợp với trình độ đọc hiểu và phong cách tương tác của ông bà, chứ không chỉ dành riêng cho bố mẹ trẻ</span>
+        </li>
+      </ul>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(2)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+          <span lang="en">Vietnamese Landscape</span>
+          <span lang="vi">Thực trạng Việt Nam</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(4)">
+          <span lang="en">Research Agenda</span>
+          <span lang="vi">Đề xuất Nghiên cứu</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 5: RESEARCH AGENDA -->
+    <section class="section" id="s4">
+      <div class="section-tag">
+        <span lang="en">Section 05 of 07</span>
+        <span lang="vi">Phần 05 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Future Research Agenda</span>
+        <span lang="vi">Đề xuất Nghiên cứu</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Critical data gaps · Normative database requirements · RCT design priorities · Academic partnerships</span>
+        <span lang="vi">Các lỗ hổng dữ liệu quan trọng · Yêu cầu về cơ sở dữ liệu chuẩn hóa · Ưu tiên thiết kế RCT · Đối tác học thuật</span>
+      </p>
+
+      <h2>
+        <span lang="en">Priority research streams</span>
+        <span lang="vi">Các hướng nghiên cứu ưu tiên</span>
+      </h2>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-red">
+            <span lang="en">Critical Priority — Platform Blocker</span>
+            <span lang="vi">Ưu tiên cốt lõi - Rào cản nền tảng</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Stream A: Vietnamese phonological acquisition norms</span>
+            <span lang="vi">Hướng A: Dữ liệu chuẩn hóa về quá trình phát triển ngữ âm tiếng Việt ở trẻ em</span>
+          </span>
+        </div>
+        <p style="font-size:13px; margin-bottom:0.75rem">
+          <span lang="en">The absence of nationally representative, age-banded, dialect-stratified normative data for Vietnamese speech sound acquisition is the single greatest obstacle to platform medical-grade validation. The platform cannot determine whether a child's phoneme accuracy is disordered or developmentally appropriate without reference norms.</span>
+          <span lang="vi">Việc thiếu hụt dữ liệu chuẩn hóa ngữ âm nhi khoa tiếng Việt có tính đại diện quốc gia, phân chia theo nhóm tuổi và phương ngữ là trở ngại lớn nhất cho việc kiểm chứng lâm sàng cấp độ y khoa của nền tảng. Nền tảng không thể xác định liệu cấu âm của trẻ là bị rối loạn hay phù hợp phát triển sinh lý bình thường nếu thiếu đi dữ liệu chuẩn hóa này.</span>
+        </p>
+        <h4>
+          <span lang="en">Required study design</span>
+          <span lang="vi">Thiết kế nghiên cứu yêu cầu</span>
+        </h4>
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Parameter</span>
+                <span lang="vi">Tham số nghiên cứu</span>
+              </th>
+              <th>
+                <span lang="en">Specification</span>
+                <span lang="vi">Quy chuẩn thiết kế</span>
+              </th>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Sample size</span><span lang="vi">Cỡ mẫu</span></strong></td>
+              <td>
+                <span lang="en">Minimum n=1,200 typically developing children; 100 per age band (1;0–6;11), stratified by dialect (Northern/Central/Southern)</span>
+                <span lang="vi">Tối thiểu n=1.200 trẻ phát triển bình thường; 100 trẻ trên mỗi nhóm tuổi (từ 1;0 đến 6;11), phân tầng theo phương ngữ (Bắc/Trung/Nam)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Age bands</span><span lang="vi">Nhóm tuổi</span></strong></td>
+              <td>
+                <span lang="en">6-month intervals from 1;0 to 6;11; 1-year intervals from 7;0 to 12;0</span>
+                <span lang="vi">Các khoảng giãn cách 6 tháng từ 1;0 đến 6;11; khoảng giãn cách 1 năm từ 7;0 đến 12;0</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Measures</span><span lang="vi">Chỉ số đo lường</span></strong></td>
+              <td>
+                <span lang="en">PCC-Vietnamese, PVC, PTC (tones), connected speech intelligibility, Maximum Phonation Time, ICS caregiver rating</span>
+                <span lang="vi">PCC tiếng Việt, PVC, PTC (thanh điệu chính xác), độ dễ hiểu của lời nói liên tục, Thời gian phát âm tối đa (MPT), đánh giá ICS của cha mẹ</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Dialectal stratification</span><span lang="vi">Phân tầng phương ngữ</span></strong></td>
+              <td>
+                <span lang="en">Northern (Hanoi/Red River Delta), Central (Huế/Đà Nẵng), Southern (HCMC/Mekong Delta) — minimum 400 per region</span>
+                <span lang="vi">Giọng Bắc (Hà Nội/Đồng bằng sông Hồng), Giọng Trung (Huế/Đà Nẵng), Giọng Nam (TP.HCM/Đồng bằng sông Cửu Long) — tối thiểu 400 trẻ mỗi vùng miền</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Exclusions</span><span lang="vi">Tiêu chuẩn loại trừ</span></strong></td>
+              <td>
+                <span lang="en">Verified hearing within normal limits (audiometric screening); no known developmental delays; monolingual Vietnamese</span>
+                <span lang="vi">Sàng lọc thính lực bình thường; không có chậm phát triển đã biết; chỉ nói tiếng Việt đơn ngữ</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Timeline</span><span lang="vi">Lộ trình thực hiện</span></strong></td>
+              <td>
+                <span lang="en">36–48 months for data collection + analysis; longitudinal subsample (n=300) for 2-year tracking</span>
+                <span lang="vi">36-48 tháng cho việc thu thập và phân tích dữ liệu; theo dõi dọc (longitudinal) một mẫu nhỏ (n=300) trong 2 năm</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong><span lang="en">Partners</span><span lang="vi">Đối tác phối hợp</span></strong></td>
+              <td>
+                <span lang="en">Hanoi Medical University, HCMC University of Medicine and Pharmacy, University of Queensland (McLeod lab), Macquarie University</span>
+                <span lang="vi">Đại học Y Hà Nội, Đại học Y Dược TP.HCM, Đại học Queensland (lab GS. McLeod), Đại học Macquarie</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-amber">
+            <span lang="en">High Priority</span>
+            <span lang="vi">Ưu tiên cao</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Stream B: Vietnamese SSD prevalence and subtype epidemiology</span>
+            <span lang="vi">Hướng B: Dịch tễ học tỷ lệ mắc và các thể lâm sàng phụ của SSD tại Việt Nam</span>
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span lang="en">National prevalence study for SSD (currently extrapolated from global estimates; no Vietnamese-specific data)</span>
+            <span lang="vi">Nghiên cứu tỷ lệ mắc SSD trên toàn quốc (hiện tại chỉ đang suy diễn từ ước tính toàn cầu; chưa có dữ liệu dịch tễ cụ thể cho Việt Nam)</span>
+          </li>
+          <li>
+            <span lang="en">Subtype prevalence: phonological disorder vs. articulation vs. CAS vs. dysarthria distribution in Vietnamese pediatric population</span>
+            <span lang="vi">Tỷ lệ các thể lâm sàng phụ: sự phân bổ của rối loạn ngữ âm, rối loạn cấu âm, CAS và loạn vận ngôn ở trẻ em Việt Nam</span>
+          </li>
+          <li>
+            <span lang="en">Co-morbidity mapping: SSD + ASD, SSD + language disorder, SSD + hearing impairment — Vietnamese-specific rates</span>
+            <span lang="vi">Lập bản đồ đồng mắc: tỷ lệ đồng mắc giữa SSD với tự kỷ (ASD), rối loạn ngôn ngữ, suy giảm thính lực tại Việt Nam</span>
+          </li>
+          <li>
+            <span lang="en">Dialect-specific "error" vs. "disorder" boundary: a Northern child producing Southern dialectal variants must not be pathologized</span>
+            <span lang="vi">Ranh giới giữa "lỗi phát âm phương ngữ" và "rối loạn cấu âm": tuyệt đối không được coi phát âm theo giọng vùng miền của trẻ là rối loạn</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-amber">
+            <span lang="en">High Priority</span>
+            <span lang="vi">Ưu tiên cao</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Stream C: RCT — RSMM/Kodály music intervention efficacy for Vietnamese SSD</span>
+            <span lang="vi">Hướng C: Thử nghiệm RCT — Hiệu quả can thiệp âm nhạc RSMM/Kodály cho SSD tiếng Việt</span>
+          </span>
+        </div>
+        <p style="font-size:13px; margin-bottom:0.75rem">
+          <span lang="en">The clinical case studies cited in the project brief represent Level IV evidence (case series). Escalation to Level Ib (RCT) is required before the platform can make medical-grade treatment recommendations based on this modality.</span>
+          <span lang="vi">Các nghiên cứu ca lâm sàng được trích dẫn trong tóm tắt dự án chỉ dừng lại ở bằng chứng Cấp IV (chuỗi ca lâm sàng). Việc nâng cấp lên Cấp Ib (Thử nghiệm ngẫu nhiên đối chứng - RCT) là bắt buộc trước khi nền tảng có thể đưa ra các khuyến nghị can thiệp ở cấp độ y tế lâm sàng.</span>
+        </p>
+        <h4>
+          <span lang="en">Proposed RCT design</span>
+          <span lang="vi">Thiết kế RCT đề xuất</span>
+        </h4>
+        <ul>
+          <li>
+            <span lang="en"><strong>Design:</strong> Randomized, waitlist-controlled trial; 3-arm: (1) RSMM/Kodály intervention, (2) Standard caregiver-mediated phonological contrast therapy, (3) Waitlist control</span>
+            <span lang="vi"><strong>Thiết kế:</strong> Thử nghiệm ngẫu nhiên đối chứng, có nhóm kiểm chứng chờ; 3 nhóm: (1) Can thiệp bằng mô hình RSMM/Kodály, (2) Trị liệu đối lập ngữ âm chuẩn do cha mẹ hỗ trợ, (3) Nhóm kiểm chứng danh sách chờ (Waitlist)</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Population:</strong> Children aged 3;0–5;11 with confirmed phonological SSD (PCC &lt;65%); Northern dialect; excluding ASD, CAS primary diagnosis, hearing impairment</span>
+            <span lang="vi"><strong>Đối tượng:</strong> Trẻ từ 3;0 đến 5;11 tuổi được chẩn đoán mắc SSD ngữ âm (PCC &lt;65%); nói giọng Bắc; loại trừ trẻ tự kỷ, trẻ chẩn đoán CAS chính, suy giảm thính lực</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Sample:</strong> n=120 (40 per arm); 80% power to detect d=0.6 effect size; 10% dropout buffer</span>
+            <span lang="vi"><strong>Quy mô mẫu:</strong> n=120 (40 trẻ mỗi nhóm); đảm bảo 80% lực lượng thống kê để phát hiện mức độ hiệu quả d=0.6; dự phòng 10% trẻ bỏ cuộc</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Primary outcome:</strong> PCC-Vietnamese change at 16 weeks; PTC-Vietnamese change</span>
+            <span lang="vi"><strong>Chỉ số đo lường chính:</strong> Thay đổi chỉ số PCC tiếng Việt sau 16 tuần; thay đổi chỉ số PTC (thanh điệu chính xác) tiếng Việt</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Secondary outcomes:</strong> ICS caregiver rating; connected speech intelligibility; parent-reported quality of life; home practice fidelity rate</span>
+            <span lang="vi"><strong>Chỉ số phụ:</strong> Đánh giá ICS của cha mẹ; độ dễ hiểu củaconnected speech; chất lượng cuộc sống do cha mẹ báo cáo; tỷ lệ tuân thủ luyện tập tại nhà</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Sites:</strong> Minimum 2 sites (Hanoi + HCMC) for dialectal and socioeconomic heterogeneity</span>
+            <span lang="vi"><strong>Địa điểm thực hiện:</strong> Tối thiểu 2 trung tâm (Hà Nội + TP.HCM) để đảm bảo tính đa dạng phương ngữ và bối cảnh kinh tế - xã hội</span>
+          </li>
+          <li>
+            <span lang="en"><strong>Timeline:</strong> 24–30 months from ethics approval to publication</span>
+            <span lang="vi"><strong>Lộ trình:</strong> 24-30 tháng từ khi được phê duyệt đạo đức sinh học đến khi công bố kết quả</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-blue">
+            <span lang="en">Medium Priority</span>
+            <span lang="vi">Ưu tiên trung bình</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Stream D: Automated tone analysis algorithm validation</span>
+            <span lang="vi">Hướng D: Kiểm chứng thuật toán phân tích thanh điệu tự động</span>
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span lang="en">The platform's AI phoneme/tone accuracy scoring system requires validation against human SLP gold-standard ratings</span>
+            <span lang="vi">Hệ thống chấm điểm độ chính xác âm vị/thanh điệu qua AI của nền tảng cần được kiểm chứng đối sánh với kết quả đánh giá tiêu chuẩn vàng của các chuyên viên SLP</span>
+          </li>
+          <li>
+            <span lang="en">Acoustic parameters for Vietnamese tone recognition: F0 trajectory, duration, phonation quality (H1-H2 for breathiness/creakiness), amplitude envelope</span>
+            <span lang="vi">Các thông số âm thanh phục vụ nhận dạng thanh điệu tiếng Việt: quỹ đạo tần số F0, thời lượng phát âm, chất lượng cấu âm hơi thở/khàn (H1-H2 cho thanh huyền/nặng; cepstral peak prominence cho thanh ngã/nặng), biên độ sóng âm</span>
+          </li>
+          <li>
+            <span lang="en">Model training data requirements: minimum 10,000 labeled child speech samples across 6 tones, 3 dialects, 2–12 year age range</span>
+            <span lang="vi">Yêu cầu dữ liệu huấn luyện mô hình: tối thiểu 10.000 mẫu giọng trẻ em được gán nhãn chi tiết trên cả 6 thanh điệu, 3 phương ngữ và độ tuổi từ 2-12</span>
+          </li>
+          <li>
+            <span lang="en">Inter-rater reliability study: AI vs. SLP vs. SLP agreement on PCC and PTC scores (target kappa ≥0.80)</span>
+            <span lang="vi">Nghiên cứu độ tin cậy liên đánh giá: đo lường mức độ đồng thuận giữa AI vs. SLP và giữa các SLP với nhau đối với chỉ số PCC và PTC (mục tiêu hệ số Kappa ≥0.80)</span>
+          </li>
+          <li>
+            <span lang="en">Special challenge: child speech acoustic models require child-specific training data (not adult corpus adaptation)</span>
+            <span lang="vi">Thách thức đặc thù: các mô hình âm học giọng trẻ em yêu cầu dữ liệu huấn luyện chuyên biệt của trẻ em (không thể thích ứng đơn thuần từ kho dữ liệu giọng người lớn)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="badge badge-purple">
+            <span lang="en">Emerging</span>
+            <span lang="vi">Hướng mới nổi</span>
+          </span>
+          <span style="font-size:13px; font-weight:500; color:var(--color-text-primary)">
+            <span lang="en">Stream E: CAS diagnostic criteria in tonal languages</span>
+            <span lang="vi">Hướng E: Tiêu chuẩn chẩn đoán chứng bất lực vận động lời nói (CAS) trong các ngôn ngữ thanh điệu</span>
+          </span>
+        </div>
+        <p style="font-size:13px; margin-bottom:0">
+          <span lang="en">Childhood Apraxia of Speech diagnostic criteria (ASHA 2007; Shriberg et al. 2017) have not been validated in any tonal language. In Vietnamese, the core CAS feature of "lexical stress errors" maps onto tonal inconsistency — a child with CAS may produce the same syllable with different tones on repeated trials. The lexical-tonal inconsistency probe is a novel research contribution the platform could uniquely generate through large-scale data collection. This has potential for original peer-reviewed contribution and positions the platform as a research infrastructure asset, not merely a clinical tool.</span>
+          <span lang="vi">Các tiêu chí chẩn đoán chứng bất lực vận động lời nói ở trẻ em (Childhood Apraxia of Speech - CAS) (ASHA 2007; Shriberg et al. 2017) chưa bao giờ được kiểm chứng trong bất kỳ ngôn ngữ thanh điệu nào. Trong tiếng Việt, đặc trưng cốt lõi của CAS là "lỗi trọng âm từ" được thể hiện cụ thể thông qua <strong>sự không nhất quán thanh điệu</strong> — trẻ mắc CAS có thể phát âm cùng một âm tiết với các thanh điệu khác nhau qua các lần lặp lại. Bảng thăm dò sự không nhất quán thanh điệu từ vựng là một đóng góp nghiên cứu hoàn toàn mới mà nền tảng có thể tạo ra thông qua việc thu thập dữ liệu quy mô lớn. Điều này mang lại tiềm năng lớn cho các công bố quốc tế được bình duyệt và khẳng định vị thế của nền tảng như một hạ tầng nghiên cứu đắc lực, chứ không chỉ là công cụ lâm sàng thông thường.</span>
+        </p>
+      </div>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(3)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+          <span lang="en">Gap Analysis</span>
+          <span lang="vi">Phân tích Khoảng trống</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(5)">
+          <span lang="en">Platform Architecture</span>
+          <span lang="vi">Kiến trúc Nền tảng</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PLATFORM ARCHITECTURE -->
+    <section class="section" id="s5">
+      <div class="section-tag">
+        <span lang="en">Section 06 of 07</span>
+        <span lang="vi">Phần 06 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Platform Architecture</span>
+        <span lang="vi">Kiến trúc Nền tảng</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Evaluation logic · Treatment recommendation engine · UX/UI for Vietnamese caregivers</span>
+        <span lang="vi">Logic đánh giá · Công cụ gợi ý can thiệp · UX/UI cho người chăm sóc tại Việt Nam</span>
+      </p>
+
+      <h2>
+        <span lang="en">System architecture overview</span>
+        <span lang="vi">Tổng quan kiến trúc hệ thống</span>
+      </h2>
+      <div class="flow-row">
+        <div class="flow-step">
+          <div class="flow-num">01</div>
+          <div class="flow-title">
+            <span lang="en">Intake & Consent</span>
+            <span lang="vi">Đăng ký & Đồng thuận</span>
+          </div>
+          <div class="flow-desc">
+            <span lang="en">Caregiver registration; dialect self-report; demographic capture; BHYT/insurance linkage</span>
+            <span lang="vi">Đăng ký người chăm sóc; tự báo cáo phương ngữ; thu thập thông tin nhân khẩu học; liên kết BHYT/bảo hiểm</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">02</div>
+          <div class="flow-title">
+            <span lang="en">Digital Screening</span>
+            <span lang="vi">Sàng lọc Kỹ thuật số</span>
+          </div>
+          <div class="flow-desc">
+            <span lang="en">Asynchronous speech sample collection; AI phoneme/tone analysis; ICS caregiver report</span>
+            <span lang="vi">Thu thập mẫu lời nói không đồng bộ; phân tích âm vị/thanh điệu bằng AI; báo cáo ICS từ người chăm sóc</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">03</div>
+          <div class="flow-title">
+            <span lang="en">Deficit Profiling</span>
+            <span lang="vi">Lập Hồ sơ Khiếm khuyết</span>
+          </div>
+          <div class="flow-desc">
+            <span lang="en">PCC-VN, PTC, severity classification; subtype probability scoring; flag for CAS/dysarthria markers</span>
+            <span lang="vi">Phân loại mức độ nghiêm trọng PCC-VN, PTC; tính điểm xác suất thể lâm sàng; gắn cờ dấu hiệu CAS/thất ngôn vận động (dysarthria)</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">04</div>
+          <div class="flow-title">
+            <span lang="en">Module Mapping</span>
+            <span lang="vi">Áp dụng Mô-đun Can thiệp</span>
+          </div>
+          <div class="flow-desc">
+            <span lang="en">Rule-based + ML engine assigns treatment modules; generates caregiver-facing home program</span>
+            <span lang="vi">Công cụ dựa trên quy tắc + ML chỉ định các mô-đun can thiệp; tạo chương trình tại nhà cho người chăm sóc</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">05</div>
+          <div class="flow-title">
+            <span lang="en">Delivery & Monitor</span>
+            <span lang="vi">Thực hiện & Giám sát</span>
+          </div>
+          <div class="flow-desc">
+            <span lang="en">Guided home sessions; fidelity scoring; 4-week re-assessment; escalation logic</span>
+            <span lang="vi">Các phiên hướng dẫn tại nhà; tính điểm độ chuẩn xác; tái đánh giá sau 4 tuần; logic nâng cấp can thiệp</span>
+          </div>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Digital evaluation flow — detailed specification</span>
+        <span lang="vi">Luồng đánh giá kỹ thuật số — thông số kỹ thuật chi tiết</span>
+      </h2>
+
+      <h3>
+        <span lang="en">Speech sample collection protocol</span>
+        <span lang="vi">Quy trình thu thập mẫu lời nói</span>
+      </h3>
+      <div class="card">
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Task</span>
+                <span lang="vi">Nhiệm vụ</span>
+              </th>
+              <th>
+                <span lang="en">Stimuli</span>
+                <span lang="vi">Kích thích</span>
+              </th>
+              <th>
+                <span lang="en">Target measures</span>
+                <span lang="vi">Chỉ số đo lường đích</span>
+              </th>
+              <th>
+                <span lang="en">Duration</span>
+                <span lang="vi">Thời lượng</span>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Single word elicitation</span>
+                  <span lang="vi">Gợi ý từ đơn</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">60-item Vietnamese picture naming set; target words selected to sample all consonant phonemes in initial/final positions across all 6 tones; dialect-adjusted stimuli sets (3 variants)</span>
+                <span lang="vi">Bộ đặt tên tranh tiếng Việt gồm 60 mục; các từ đích được chọn để lấy mẫu tất cả các phụ âm đầu/cuối qua cả 6 thanh điệu; bộ kích thích điều chỉnh theo phương ngữ (3 biến thể)</span>
+              </td>
+              <td>
+                <span lang="en">PCC-VN; PTC; individual phoneme accuracy; tone accuracy by tone type</span>
+                <span lang="vi">PCC-VN; PTC; độ chính xác của từng âm vị; độ chính xác thanh điệu theo loại thanh</span>
+              </td>
+              <td>
+                <span lang="en">~8–12 min</span>
+                <span lang="vi">~8–12 phút</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Connected speech sample</span>
+                  <span lang="vi">Mẫu lời nói liên tục</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">5-minute caregiver-elicited narrative ("tell me about your day/a favourite story"); free play if child non-verbal</span>
+                <span lang="vi">Bài tường thuật 5 phút do người chăm sóc gợi ý ("kể về một ngày của con/câu chuyện yêu thích"); chơi tự do nếu trẻ chưa nói được</span>
+              </td>
+              <td>
+                <span lang="en">Connected speech intelligibility; phonological process analysis; mean length of utterance proxy</span>
+                <span lang="vi">Mức độ dễ hiểu trong lời nói liên tục; phân tích tiến trình âm vị học; chỉ số chiều dài trung bình phát ngôn (MLU)</span>
+              </td>
+              <td>
+                <span lang="en">5 min elicitation; AI analysis async</span>
+                <span lang="vi">5 phút gợi ý; phân tích AI không đồng bộ</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Tone minimal pair discrimination</span>
+                  <span lang="vi">Phân biệt cặp tối thiểu thanh điệu</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">Forced-choice picture pointing: caregiver says word, child points (e.g., ma/mà/má/mả/mã/mạ — six-way contrast); tablet-displayed picture array</span>
+                <span lang="vi">Chỉ tranh bắt buộc: người chăm sóc đọc từ, trẻ chỉ tranh (ví dụ: ma/mà/má/mả/mã/mạ — đối chiếu 6 hướng); mảng tranh hiển thị trên máy tính bảng</span>
+              </td>
+              <td>
+                <span lang="en">Receptive tone discrimination accuracy; differentiates production from perception deficit</span>
+                <span lang="vi">Độ chính xác phân biệt thanh điệu thụ nhận; phân biệt khiếm khuyết phát âm với khiếm khuyết nhận thức</span>
+              </td>
+              <td>
+                <span lang="en">~5 min</span>
+                <span lang="vi">~5 phút</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Maximum Phonation Time (MPT)</span>
+                  <span lang="vi">Thời gian Phát âm Tối đa (MPT)</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">Sustained /a/ and /i/ vowel; 3 trials each; caregiver-administered via in-app timer and waveform display</span>
+                <span lang="vi">Kéo dài nguyên âm /a/ và /i/; 3 lần thử mỗi âm; người chăm sóc thực hiện qua đồng hồ hẹn giờ và hiển thị dạng sóng trong ứng dụng</span>
+              </td>
+              <td>
+                <span lang="en">Respiratory support; phonatory control; dysarthria/CAS screening proxy</span>
+                <span lang="vi">Hỗ trợ hô hấp; kiểm soát phát âm; chỉ số tầm soát dysarthria/CAS</span>
+              </td>
+              <td>
+                <span lang="en">~3 min</span>
+                <span lang="vi">~3 phút</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Diadochokinesis (DDK)</span>
+                  <span lang="vi">Động tác liên động nhanh (DDK)</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">Rapid syllable repetition: /pa-pa-pa/, /ta-ta-ta/, /ka-ka-ka/, /pa-ta-ka/ (Vietnamese phoneme-adapted)</span>
+                <span lang="vi">Lặp lại âm tiết nhanh: /pa-pa-pa/, /ta-ta-ta/, /ka-ka-ka/, /pa-ta-ka/ (đã điều chỉnh âm vị tiếng Việt)</span>
+              </td>
+              <td>
+                <span lang="en">Articulatory motor speed/rhythm; CAS/dysarthria screening; high tonal variant: /ba-ba-ba/ with alternating tones</span>
+                <span lang="vi">Tốc độ/nhịp điệu vận động cấu âm; tầm soát CAS/dysarthria; biến thể cao độ thanh điệu: /ba-ba-ba/ luân phiên thanh điệu</span>
+              </td>
+              <td>
+                <span lang="en">~4 min</span>
+                <span lang="vi">~4 phút</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">ICS (Intelligibility in Context Scale)</span>
+                  <span lang="vi">Thang đo mức độ Dễ hiểu theo Ngữ cảnh (ICS)</span>
+                </strong>
+              </td>
+              <td>
+                <span lang="en">7-item caregiver questionnaire (Vietnamese validated version)</span>
+                <span lang="vi">Bảng hỏi người chăm sóc gồm 7 mục (phiên bản tiếng Việt đã được chuẩn hóa)</span>
+              </td>
+              <td>
+                <span lang="en">Functional intelligibility across communication partners; ecologically valid severity proxy</span>
+                <span lang="vi">Mức độ dễ hiểu chức năng giữa các đối tượng giao tiếp; chỉ số mức độ nghiêm trọng có giá trị sinh thái thực tế</span>
+              </td>
+              <td>
+                <span lang="en">~2 min</span>
+                <span lang="vi">~2 phút</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>
+        <span lang="en">AI acoustic analysis engine specifications</span>
+        <span lang="vi">Thông số kỹ thuật của động cơ phân tích âm học AI</span>
+      </h3>
+      <div class="two-col">
+        <div class="card">
+          <span class="badge badge-blue" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Phoneme scoring</span>
+            <span lang="vi">Chấm điểm âm vị</span>
+          </span>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Forced-alignment ASR adapted for Vietnamese child speech</span>
+              <span lang="vi">Nhận dạng tiếng nói ASR căn chỉnh bắt buộc điều chỉnh cho lời nói trẻ em Việt Nam</span>
+            </li>
+            <li>
+              <span lang="en">Phoneme-level confidence scoring against target pronunciation</span>
+              <span lang="vi">Chấm điểm độ tin cậy cấp độ âm vị so với phát âm đích</span>
+            </li>
+            <li>
+              <span lang="en">Substitution, omission, and distortion classification</span>
+              <span lang="vi">Phân loại lỗi thay thế, lược bỏ, và biến âm</span>
+            </li>
+            <li>
+              <span lang="en">Dialect-adjusted phoneme targets (3-dialect model)</span>
+              <span lang="vi">Mục tiêu âm vị điều chỉnh theo phương ngữ (mô hình 3 phương ngữ)</span>
+            </li>
+            <li>
+              <span lang="en">Age-normalized against platform's growing normative database</span>
+              <span lang="vi">Chuẩn hóa theo độ tuổi dựa trên cơ sở dữ liệu quy chuẩn ngày càng phát triển của nền tảng</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge-teal" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Tone scoring</span>
+            <span lang="vi">Chấm điểm thanh điệu</span>
+          </span>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">F0 trajectory extraction (fundamental frequency contour)</span>
+              <span lang="vi">Trích xuất quỹ đạo F0 (đường viền tần số cơ bản)</span>
+            </li>
+            <li>
+              <span lang="en">Phonation quality analysis: H1-H2 spectral slope for breathiness (huyền, nặng); cepstral peak prominence for creakiness (ngã, nặng)</span>
+              <span lang="vi">Phân tích chất lượng phát âm: độ dốc phổ H1-H2 cho giọng hơi (huyền, nặng); độ nổi bật đỉnh phổ cepstral cho giọng nghẹt (ngã, nặng)</span>
+            </li>
+            <li>
+              <span lang="en">Duration normalization</span>
+              <span lang="vi">Chuẩn hóa thời lượng</span>
+            </li>
+            <li>
+              <span lang="en">Tone classification: correct / confusable pair error / complete neutralization</span>
+              <span lang="vi">Phân loại thanh điệu: đúng / lỗi cặp dễ nhầm lẫn / trung hòa hoàn toàn</span>
+            </li>
+            <li>
+              <span lang="en">PTC computation with tone-specific breakdown</span>
+              <span lang="vi">Tính toán chỉ số PTC kèm theo phân tích chi tiết từng thanh điệu</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Treatment recommendation engine — logic matrix</span>
+        <span lang="vi">Động cơ gợi ý can thiệp — ma trận logic</span>
+      </h2>
+
+      <h3>
+        <span lang="en">Deficit-to-module mapping rules</span>
+        <span lang="vi">Quy tắc ánh xạ từ khiếm khuyết sang mô-đun can thiệp</span>
+      </h3>
+      <div style="margin:1rem 0">
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>Final coda /-ng/ accuracy &lt;40%</strong> (omission pattern dominant)</span>
+            <span lang="vi"><strong>Độ chính xác của phụ âm cuối /-ng/ &lt;40%</strong> (kiểu lược bỏ chiếm ưu thế)</span>
+          </span>
+          <span class="logic-then">→ MODULE</span>
+          <span class="logic-text">
+            <span lang="en">Orff-Schulwerk "Breath and Body" Module 1: Resonance activation; velar nasal placement via humming /ŋ/ with body percussion; Kodály: final-note held cadence exercises using <em>Lý cây xanh</em></span>
+            <span lang="vi">Orff-Schulwerk "Hơi thở & Cơ thể" Mô-đun 1: Kích hoạt cộng hưởng; đặt vị trí âm mũi ngạc mềm thông qua ngâm nga /ŋ/ kết hợp gõ cơ thể; Kodály: các bài tập ngân giữ nốt cuối sử dụng bài <em>Lý cây xanh</em></span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>Ngã tone accuracy &lt;30%</strong> (rising-broken contour absent)</span>
+            <span lang="vi"><strong>Độ chính xác thanh Ngã &lt;30%</strong> (thiếu đường nét đi lên - gãy)</span>
+          </span>
+          <span class="logic-then">→ MODULE</span>
+          <span class="logic-text">
+            <span lang="en">Kodály Contour Module 4: 4-note ascending figure with embedded rest; glottal onset training via stop-consonant chaining; Orff: finger cymbal on break point; <em>Quan họ Bắc Ninh</em> duet practice with caregiver</span>
+            <span lang="vi">Đường nét Kodály Mô-đun 4: Nhạc hình đi lên 4 nốt kèm dấu lặng lồng ghép; huấn luyện khởi phát thanh môn qua chuỗi phụ âm tắc; Orff: chơi chũm chọe ngón tay tại điểm ngắt giọng; thực hành song ca <em>Quan họ Bắc Ninh</em> cùng người chăm sóc</span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>Hỏi/Ngã tone confusion rate &gt;60%</strong></span>
+            <span lang="vi"><strong>Tỷ lệ nhầm lẫn thanh Hỏi/Ngã &gt;60%</strong></span>
+          </span>
+          <span class="logic-then">→ MODULE</span>
+          <span class="logic-text">
+            <span lang="en">Minimal tone pair discrimination + production: caregiver presents hỏi/ngã minimal pairs; child identifies + produces; melodic contour cards; auditory discrimination training precedes production training</span>
+            <span lang="vi">Phân biệt + phát âm cặp tối thiểu thanh điệu: người chăm sóc đưa ra các cặp tối thiểu hỏi/ngã; trẻ nhận biết + phát âm; thẻ đường nét giai điệu; huấn luyện phân biệt thính giác đi trước huấn luyện phát âm</span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>MPT &lt;5 sec (age-normalized) AND PCC &lt;60%</strong></span>
+            <span lang="vi"><strong>MPT &lt;5 giây (chuẩn hóa theo tuổi) VÀ PCC &lt;60%</strong></span>
+          </span>
+          <span class="logic-then">→ FLAG</span>
+          <span class="logic-text">
+            <span lang="en">Respiratory support deficit co-occurring with SSD: add Orff "Airflow Activation" prerequisite module before phoneme-level intervention; escalate to SLP review if MPT &lt;3 sec</span>
+            <span lang="vi">Khiếm khuyết hỗ trợ hô hấp đồng xảy ra với SSD: thêm mô-đun tiên quyết Orff "Kích hoạt dòng khí" trước khi can thiệp cấp độ âm vị; chuyển tiếp đánh giá SLP chuyên gia nếu MPT &lt;3 giây</span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>DDK rate irregular AND tonal inconsistency score &gt;0.4 AND connected speech intelligibility &lt;50%</strong></span>
+            <span lang="vi"><strong>Tốc độ DDK không đều VÀ điểm không nhất quán thanh điệu &gt;0.4 VÀ mức độ dễ hiểu trong lời nói liên tục &lt;50%</strong></span>
+          </span>
+          <span class="logic-then">→ ESCALATE</span>
+          <span class="logic-text">
+            <span lang="en">CAS screening positive cluster: immediate referral flag to human SLP; platform suspends autonomous treatment recommendation; generate structured clinical referral report with acoustic data attached</span>
+            <span lang="vi">Nhóm tầm soát CAS dương tính: gắn cờ chuyển gửi ngay đến chuyên viên Âm ngữ Trị liệu (SLP); nền tảng tạm dừng khuyến nghị can thiệp tự động; tạo báo cáo chuyển gửi lâm sàng có cấu trúc kèm theo dữ liệu âm học</span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>PCC-VN &gt;85% AND PTC &gt;80%</strong></span>
+            <span lang="vi"><strong>PCC-VN &gt;85% VÀ PTC &gt;80%</strong></span>
+          </span>
+          <span class="logic-then">→ CLOSE</span>
+          <span class="logic-text">
+            <span lang="en">Within normal limits for age: provide parent reassurance report; literacy readiness checklist; schedule 6-month re-screening; no intervention module assigned</span>
+            <span lang="vi">Trong giới hạn bình thường so với tuổi: cung cấp báo cáo trấn an phụ huynh; bảng kiểm sàng lọc sẵn sàng đọc viết; lên lịch tầm soát lại sau 6 tháng; không chỉ định mô-đun can thiệp</span>
+          </span>
+        </div>
+        <div class="logic-rule">
+          <span class="logic-if">
+            <span lang="en">IF</span>
+            <span lang="vi">NẾU</span>
+          </span>
+          <span class="logic-text">
+            <span lang="en"><strong>Initial consonant affricate errors (ch-/tr- substitution) AND child age 3;0–4;11</strong></span>
+            <span lang="vi"><strong>Lỗi phụ âm đầu tắc xát (thay thế ch-/tr-) VÀ tuổi của trẻ từ 3;0–4;11</strong></span>
+          </span>
+          <span class="logic-then">→ MONITOR</span>
+          <span class="logic-text">
+            <span lang="en">Age-expected error pattern: watchful waiting with parent guidance sheet; re-screen at 5;0; assign Orff rhythmic naming game (affricate emphasis) as enrichment, not remediation</span>
+            <span lang="vi">Kiểu lỗi phát triển theo độ tuổi: theo dõi sát sao kèm tài liệu hướng dẫn phụ huynh; tầm soát lại lúc 5;0 tuổi; chỉ định trò chơi đặt tên theo nhịp điệu Orff (nhấn mạnh âm tắc xát) như một hoạt động làm phong phú, không phải khắc phục</span>
+          </span>
+        </div>
+      </div>
+
+      <h3>
+        <span lang="en">Module library structure</span>
+        <span lang="vi">Cấu trúc thư viện mô-đun</span>
+      </h3>
+      <div class="card">
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Module code</span>
+                <span lang="vi">Mã mô-đun</span>
+              </th>
+              <th>
+                <span lang="en">Name</span>
+                <span lang="vi">Tên</span>
+              </th>
+              <th>
+                <span lang="en">Modality</span>
+                <span lang="vi">Phương thức</span>
+              </th>
+              <th>
+                <span lang="en">Target deficit</span>
+                <span lang="vi">Khiếm khuyết đích</span>
+              </th>
+              <th>
+                <span lang="en">Session format</span>
+                <span lang="vi">Định dạng phiên</span>
+              </th>
+            </tr>
+            <tr>
+              <td><span class="inline-code">ORF-A01</span></td>
+              <td>
+                <span lang="en">Breath & resonance foundation</span>
+                <span lang="vi">Nền tảng hơi thở & cộng hưởng</span>
+              </td>
+              <td>Orff-Schulwerk</td>
+              <td>
+                <span lang="en">MPT &lt;age norm; respiratory support</span>
+                <span lang="vi">MPT &lt;chuẩn tuổi; hỗ trợ hô hấp</span>
+              </td>
+              <td>
+                <span lang="en">3×/week, 10 min; caregiver-led</span>
+                <span lang="vi">3 lần/tuần, 10 phút; người chăm sóc dẫn dắt</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">ORF-A02</span></td>
+              <td>
+                <span lang="en">Body percussion phoneme chains</span>
+                <span lang="vi">Chuỗi âm vị gõ cơ thể</span>
+              </td>
+              <td>Orff-Schulwerk</td>
+              <td>
+                <span lang="en">Coda consonant omissions</span>
+                <span lang="vi">Lược bỏ phụ âm cuối</span>
+              </td>
+              <td>
+                <span lang="en">Daily, 8 min; song-game format</span>
+                <span lang="vi">Hàng ngày, 8 phút; định dạng bài hát - trò chơi</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">KOD-T01</span></td>
+              <td>
+                <span lang="en">Falling tone (huyền/nặng) contour</span>
+                <span lang="vi">Đường nét thanh đi xuống (huyền/nặng)</span>
+              </td>
+              <td>Kodály</td>
+              <td>
+                <span lang="en">Descending tone accuracy</span>
+                <span lang="vi">Độ chính xác thanh đi xuống</span>
+              </td>
+              <td>
+                <span lang="en">Daily, 5 min; lullaby-based</span>
+                <span lang="vi">Hàng ngày, 5 phút; dựa trên bài hát ru</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">KOD-T02</span></td>
+              <td>
+                <span lang="en">Rising tone (sắc/hỏi) contour</span>
+                <span lang="vi">Đường nét thanh đi lên (sắc/hỏi)</span>
+              </td>
+              <td>Kodály</td>
+              <td>
+                <span lang="en">Rising tone accuracy</span>
+                <span lang="vi">Độ chính xác thanh đi lên</span>
+              </td>
+              <td>
+                <span lang="en">Daily, 5 min; call-response song</span>
+                <span lang="vi">Hàng ngày, 5 phút; bài hát xướng - họa</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">KOD-T03</span></td>
+              <td>
+                <span lang="en">Complex tone (ngã) — laryngeal</span>
+                <span lang="vi">Thanh điệu phức tạp (ngã) — thanh quản</span>
+              </td>
+              <td>Kodály + Orff</td>
+              <td>
+                <span lang="en">Ngã tone; glottal control</span>
+                <span lang="vi">Thanh Ngã; kiểm soát thanh môn</span>
+              </td>
+              <td>
+                <span lang="en">3×/week, 12 min; highest complexity</span>
+                <span lang="vi">3 lần/tuần, 12 phút; độ phức tạp cao nhất</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">PHO-C01</span></td>
+              <td>
+                <span lang="en">Minimal pair contrast — tone</span>
+                <span lang="vi">Đối chiếu cặp tối thiểu — thanh điệu</span>
+              </td>
+              <td>Phonological contrast</td>
+              <td>
+                <span lang="en">Tone confusion pairs</span>
+                <span lang="vi">Các cặp nhầm lẫn thanh điệu</span>
+              </td>
+              <td>
+                <span lang="en">Daily, 10 min; picture card game</span>
+                <span lang="vi">Hàng ngày, 10 phút; trò chơi thẻ tranh</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">PHO-C02</span></td>
+              <td>
+                <span lang="en">Minimal pair contrast — consonant</span>
+                <span lang="vi">Đối chiếu cặp tối thiểu — phụ âm</span>
+              </td>
+              <td>Phonological contrast</td>
+              <td>
+                <span lang="en">Consonant substitutions</span>
+                <span lang="vi">Thay thế phụ âm</span>
+              </td>
+              <td>
+                <span lang="en">Daily, 10 min; naming game</span>
+                <span lang="vi">Hàng ngày, 10 phút; trò chơi đặt tên</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">CAR-ED01</span></td>
+              <td>
+                <span lang="en">Caregiver education: what is SSD</span>
+                <span lang="vi">Giáo dục người chăm sóc: SSD là gì</span>
+              </td>
+              <td>Psychoeducation</td>
+              <td>
+                <span lang="en">All — prerequisite</span>
+                <span lang="vi">Tất cả — tiên quyết</span>
+              </td>
+              <td>
+                <span lang="en">Once; 15 min video module</span>
+                <span lang="vi">Một lần; mô-đun video 15 phút</span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">CAR-FID01</span></td>
+              <td>
+                <span lang="en">Caregiver fidelity: elicitation technique</span>
+                <span lang="vi">Độ tin cậy người chăm sóc: kỹ thuật gợi mở</span>
+              </td>
+              <td>Coaching</td>
+              <td>
+                <span lang="en">All — prerequisite</span>
+                <span lang="vi">Tất cả — tiên quyết</span>
+              </td>
+              <td>
+                <span lang="en">Once; 20 min interactive video</span>
+                <span lang="vi">Một lần; video tương tác 20 phút</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">UX/UI considerations for Vietnamese caregivers</span>
+        <span lang="vi">Xem xét UX/UI cho người chăm sóc tại Việt Nam</span>
+      </h2>
+      <div class="matrix-grid">
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Literacy & language</span>
+            <span lang="vi">Học vấn & Ngôn ngữ</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">All UI text at grade 6 reading level (Vietnamese)</span>
+              <span lang="vi">Toàn bộ văn bản UI ở mức độ đọc hiểu lớp 6 (tiếng Việt)</span>
+            </li>
+            <li>
+              <span lang="en">Audio narration for all written instructions</span>
+              <span lang="vi">Thuyết minh âm thanh cho tất cả hướng dẫn bằng văn bản</span>
+            </li>
+            <li>
+              <span lang="en">Video modeling over text instructions throughout</span>
+              <span lang="vi">Mô hình hóa bằng video xuyên suốt thay thế hướng dẫn bằng văn bản</span>
+            </li>
+            <li>
+              <span lang="en">Dialect-sensitive voice recording prompts (3 regional versions)</span>
+              <span lang="vi">Gợi ý ghi âm nhạy cảm với phương ngữ (3 phiên bản vùng miền)</span>
+            </li>
+            <li>
+              <span lang="en">Avoid clinical terminology in caregiver-facing UI; use "how your child speaks" not "phonological disorder"</span>
+              <span lang="vi">Tránh thuật ngữ lâm sàng trong giao diện dành cho người chăm sóc; dùng từ "cách con bạn nói" thay vì "rối loạn âm vị học"</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Device & connectivity</span>
+            <span lang="vi">Thiết bị & Kết nối</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Primary target: Android mid-range (Samsung A-series; Realme; Xiaomi) — dominant in Vietnamese market</span>
+              <span lang="vi">Mục tiêu chính: Android phân khúc tầm trung (dòng Samsung A; Realme; Xiaomi) — chiếm ưu thế tại thị trường Việt Nam</span>
+            </li>
+            <li>
+              <span lang="en">Minimum: Android 8.0; iOS 13; 2GB RAM; built-in microphone</span>
+              <span lang="vi">Yêu cầu tối thiểu: Android 8.0; iOS 13; 2GB RAM; có micro tích hợp</span>
+            </li>
+            <li>
+              <span lang="en">Offline-capable: all assessment tasks cacheable; audio uploaded async when connectivity restores</span>
+              <span lang="vi">Khả năng hoạt động ngoại tuyến: tất cả nhiệm vụ đánh giá đều có thể lưu tạm; âm thanh được tải lên không đồng bộ khi có kết nối trở lại</span>
+            </li>
+            <li>
+              <span lang="en">Low-bandwidth mode: 3G fallback; compressed audio; delayed AI analysis</span>
+              <span lang="vi">Chế độ băng thông thấp: tự động chuyển về mạng 3G; nén âm thanh; trì hoãn phân tích AI</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Cultural UX</span>
+            <span lang="vi">UX Văn hóa</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Collectivist framing: "helping your family" not "your child has a problem"</span>
+              <span lang="vi">Định khung theo tính tập thể: "giúp đỡ gia đình bạn" thay vì "con bạn đang gặp vấn đề"</span>
+            </li>
+            <li>
+              <span lang="en">Grandparent-accessible design: larger touch targets; simplified navigation; 3-tap maximum depth</span>
+              <span lang="vi">Thiết kế dễ tiếp cận cho ông bà: mục tiêu chạm lớn hơn; điều hướng đơn giản hóa; độ sâu tối đa 3 lần chạm</span>
+            </li>
+            <li>
+              <span lang="en">Progress displayed as family achievement, not clinical score</span>
+              <span lang="vi">Tiến trình hiển thị dưới dạng thành tựu gia đình, không phải điểm số lâm sàng</span>
+            </li>
+            <li>
+              <span lang="en">Avoid Western medical iconography; use Vietnamese visual motifs in character design</span>
+              <span lang="vi">Tránh hình tượng y tế phương Tây; sử dụng các họa tiết thị giác Việt Nam trong thiết kế nhân vật</span>
+            </li>
+            <li>
+              <span lang="en">Teacher/school notification integration: Vietnamese schools are key referral nodes</span>
+              <span lang="vi">Tích hợp thông báo giáo viên/trường học: trường học Việt Nam là các đầu mối chuyển gửi can thiệp quan trọng</span>
+            </li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <h4>
+            <span lang="en">Privacy & trust</span>
+            <span lang="vi">Quyền riêng tư & Niềm tin</span>
+          </h4>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Explicit data consent in plain Vietnamese; audio retained for research only with opt-in</span>
+              <span lang="vi">Đồng thuận dữ liệu rõ ràng bằng tiếng Việt phổ thông; giữ lại âm thanh để nghiên cứu chỉ khi được chấp thuận rõ ràng (opt-in)</span>
+            </li>
+            <li>
+              <span lang="en">No data shared with employer/school without explicit consent</span>
+              <span lang="vi">Không chia sẻ dữ liệu với đơn vị tuyển dụng/trường học nếu không có sự đồng thuận rõ ràng</span>
+            </li>
+            <li>
+              <span lang="en">Comply with Vietnam's Personal Data Protection Decree (Decree 13/2023/ND-CP)</span>
+              <span lang="vi">Tuân thủ Nghị định Bảo vệ Dữ liệu Cá nhân của Việt Nam (Nghị định 13/2023/NĐ-CP)</span>
+            </li>
+            <li>
+              <span lang="en">Stigma mitigation: app branded as "speech development support" not "speech disorder diagnosis"</span>
+              <span lang="vi">Giảm thiểu sự kỳ thị: ứng dụng được định vị thương hiệu là "hỗ trợ phát triển lời nói" thay vì "chẩn đoán rối loạn lời nói"</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(4)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i> 
+          <span lang="en">Research Agenda</span>
+          <span lang="vi">Chương trình Nghiên cứu</span>
+        </button>
+        <button class="nav-btn" onclick="showSection(6)">
+          <span lang="en">Strategic Conclusion</span>
+          <span lang="vi">Kết luận Chiến lược</span>
+          <i class="ti ti-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 7: STRATEGIC CONCLUSION -->
+    <section class="section" id="s6">
+      <div class="section-tag">
+        <span lang="en">Section 07 of 07</span>
+        <span lang="vi">Phần 07 trên 07</span>
+      </div>
+      <h1>
+        <span lang="en">Strategic Conclusion & Next Steps</span>
+        <span lang="vi">Kết luận Chiến lược & Các bước tiếp theo</span>
+      </h1>
+      <p class="subtitle">
+        <span lang="en">Prototype development · Clinical validation pathway · Partnership strategy · 36-month roadmap</span>
+        <span lang="vi">Phát triển bản mẫu · Lộ trình xác thực lâm sàng · Chiến lược hợp tác · Lộ trình 36 tháng</span>
+      </p>
+
+      <h2>
+        <span lang="en">Readiness assessment</span>
+        <span lang="vi">Đánh giá mức độ sẵn sàng</span>
+      </h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>
+              <span lang="en">Component</span>
+              <span lang="vi">Hợp phần</span>
+            </th>
+            <th>
+              <span lang="en">Readiness</span>
+              <span lang="vi">Mức độ sẵn sàng</span>
+            </th>
+            <th>
+              <span lang="en">Blocking dependencies</span>
+              <span lang="vi">Phụ thuộc cốt lõi</span>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">ICS caregiver screening (intake)</span>
+              <span lang="vi">Sàng lọc ICS từ người chăm sóc (đầu vào)</span>
+            </td>
+            <td><span class="badge badge-green"><span lang="en">Deploy now</span><span lang="vi">Triển khai ngay</span></span></td>
+            <td>
+              <span lang="en">None — already validated in Vietnamese</span>
+              <span lang="vi">Không — đã được chuẩn hóa bằng tiếng Việt</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Audio sample collection infrastructure</span>
+              <span lang="vi">Cơ sở hạ tầng thu thập mẫu âm thanh</span>
+            </td>
+            <td><span class="badge badge-green"><span lang="en">Deploy now</span><span lang="vi">Triển khai ngay</span></span></td>
+            <td>
+              <span lang="en">Requires only app build + server infrastructure; no clinical validation needed for data collection</span>
+              <span lang="vi">Chỉ cần xây dựng ứng dụng + cơ sở hạ tầng máy chủ; không cần xác thực lâm sàng để thu thập dữ liệu</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Caregiver education modules (CAR-ED01, CAR-FID01)</span>
+              <span lang="vi">Mô-đun giáo dục người chăm sóc (CAR-ED01, CAR-FID01)</span>
+            </td>
+            <td><span class="badge badge-green"><span lang="en">Deploy now</span><span lang="vi">Triển khai ngay</span></span></td>
+            <td>
+              <span lang="en">Video production; SLP content review; cultural consultant review</span>
+              <span lang="vi">Sản xuất video; chuyên gia SLP đánh giá nội dung; cố vấn văn hóa đánh giá</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Kodály music modules (KOD-T01, T02)</span>
+              <span lang="vi">Mô-đun âm nhạc Kodály (KOD-T01, T02)</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">6–12 months</span><span lang="vi">6–12 tháng</span></span></td>
+            <td>
+              <span lang="en">Music therapist + SLP co-design; folk song corpus licensing; pilot usability testing</span>
+              <span lang="vi">Nhà trị liệu âm nhạc + chuyên gia SLP đồng thiết kế; cấp phép kho lưu trữ dân ca; thử nghiệm khả năng sử dụng thử nghiệm</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">AI phoneme accuracy scoring (PCC-VN)</span>
+              <span lang="vi">Chấm điểm độ chính xác âm vị bằng AI (PCC-VN)</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">12–18 months</span><span lang="vi">12–18 tháng</span></span></td>
+            <td>
+              <span lang="en">Vietnamese child speech corpus (minimum 2,000 samples for initial model); forced-alignment ASR training; SLP validation study</span>
+              <span lang="vi">Kho dữ liệu lời nói trẻ em Việt Nam (tối thiểu 2.000 mẫu cho mô hình ban đầu); huấn luyện ASR căn chỉnh bắt buộc; nghiên cứu xác thực SLP</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">AI tone accuracy scoring (PTC)</span>
+              <span lang="vi">Chấm điểm độ chính xác thanh điệu bằng AI (PTC)</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">18–24 months</span><span lang="vi">18–24 tháng</span></span></td>
+            <td>
+              <span lang="en">F0 + phonation quality model; larger corpus (5,000+ samples); 3-dialect model; validation kappa ≥0.80</span>
+              <span lang="vi">Mô hình chất lượng phát âm + F0; kho dữ liệu lớn hơn (5.000+ mẫu); mô hình 3 phương ngữ; hệ số kappa xác thực ≥0,80</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Full recommendation engine (rule-based)</span>
+              <span lang="vi">Công cụ khuyến nghị đầy đủ (dựa trên quy tắc)</span>
+            </td>
+            <td><span class="badge badge-amber"><span lang="en">12–18 months</span><span lang="vi">12–18 tháng</span></span></td>
+            <td>
+              <span lang="en">Clinical SLP expert panel review of logic rules; pilot RCT with 30-child feasibility study</span>
+              <span lang="vi">Hội đồng chuyên gia SLP lâm sàng đánh giá các quy tắc logic; thử nghiệm RCT thí điểm với nghiên cứu tính khả thi trên 30 trẻ</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Medical-grade AI recommendation engine (ML)</span>
+              <span lang="vi">Công cụ khuyến nghị AI cấp độ y tế (ML)</span>
+            </td>
+            <td><span class="badge badge-red"><span lang="en">36–48 months</span><span lang="vi">36–48 tháng</span></span></td>
+            <td>
+              <span lang="en">Normative database (Stream A); outcome data from Stream C RCT; regulatory pathway (Vietnam MoH medical device class)</span>
+              <span lang="vi">Cơ sở dữ liệu quy chuẩn (Luồng A); dữ liệu kết quả từ Luồng C RCT; lộ trình pháp lý (phân loại trang thiết bị y tế của Bộ Y tế Việt Nam)</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h2>
+        <span lang="en">36-month prototype-to-validation roadmap</span>
+        <span lang="vi">Lộ trình 36 tháng từ bản mẫu đến xác thực</span>
+      </h2>
+      <div class="card">
+        <div class="table-wrap">
+          <table style="margin-bottom:0">
+            <tr>
+              <th>
+                <span lang="en">Phase</span>
+                <span lang="vi">Giai đoạn</span>
+              </th>
+              <th>
+                <span lang="en">Months</span>
+                <span lang="vi">Tháng</span>
+              </th>
+              <th>
+                <span lang="en">Key deliverables</span>
+                <span lang="vi">Kết quả bàn giao then chốt</span>
+              </th>
+              <th>
+                <span lang="en">Go/no-go criteria</span>
+                <span lang="vi">Tiêu chí Go/No-go</span>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Phase 0</span>
+                  <span lang="vi">Giai đoạn 0</span>
+                </strong>
+                <br>
+                <span style="font-size:11px;color:var(--color-text-tertiary)">
+                  <span lang="en">Foundation</span>
+                  <span lang="vi">Nền tảng</span>
+                </span>
+              </td>
+              <td>0–6</td>
+              <td>
+                <span lang="en">Ethics approvals (Vietnam MoH, university IRBs); clinical advisory board formation (5 Vietnamese SLPs, 2 music therapists, 2 international SLP researchers); folk song corpus rights; app wireframes; caregiver focus groups (n=20)</span>
+                <span lang="vi">Phê duyệt đạo đức (Bộ Y tế Việt Nam, IRB của trường đại học); thành lập hội đồng cố vấn lâm sàng (5 chuyên gia SLP Việt Nam, 2 nhà trị liệu âm nhạc, 2 nhà nghiên cứu SLP quốc tế); bản quyền kho lưu trữ dân ca; sơ đồ ứng dụng; nhóm tập trung người chăm sóc (n=20)</span>
+              </td>
+              <td>
+                <span lang="en">Ethics approval granted; advisory board confirmed; app prototype functional</span>
+                <span lang="vi">Phê duyệt đạo đức được thông qua; hội đồng cố vấn được xác nhận; bản mẫu ứng dụng hoạt động tốt</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Phase 1</span>
+                  <span lang="vi">Giai đoạn 1</span>
+                </strong>
+                <br>
+                <span style="font-size:11px;color:var(--color-text-tertiary)">
+                  <span lang="en">Data collection</span>
+                  <span lang="vi">Thu thập dữ liệu</span>
+                </span>
+              </td>
+              <td>6–18</td>
+              <td>
+                <span lang="en">Deploy audio collection app; collect n=500 normative child speech samples (Northern dialect first); pilot Kodály modules with n=30 children (feasibility RCT); first AI model training (phoneme level only); caregiver module usability study (n=50 caregivers)</span>
+                <span lang="vi">Triển khai ứng dụng thu thập âm thanh; thu thập n=500 mẫu lời nói quy chuẩn của trẻ em (phương ngữ miền Bắc trước); thí điểm các mô-đun Kodály với n=30 trẻ (RCT tính khả thi); huấn luyện mô hình AI đầu tiên (chỉ cấp độ âm vị); nghiên cứu khả năng sử dụng mô-đun cho người chăm sóc (n=50 người chăm sóc)</span>
+              </td>
+              <td>
+                <span lang="en">500 labeled samples collected; AI phoneme accuracy kappa ≥0.70; caregiver module completion rate ≥70%</span>
+                <span lang="vi">Thu thập đủ 500 mẫu đã gán nhãn; độ chính xác âm vị AI có hệ số kappa ≥0,70; tỷ lệ hoàn thành mô-đun của người chăm sóc ≥70%</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Phase 2</span>
+                  <span lang="vi">Giai đoạn 2</span>
+                </strong>
+                <br>
+                <span style="font-size:11px;color:var(--color-text-tertiary)">
+                  <span lang="en">Validation</span>
+                  <span lang="vi">Xác thực</span>
+                </span>
+              </td>
+              <td>18–30</td>
+              <td>
+                <span lang="en">Full normative study launch (n=1,200); RCT launch (RSMM vs. standard vs. waitlist); tone scoring model development; recommendation engine v1.0 (rule-based); full platform beta launch in 2 hospitals</span>
+                <span lang="vi">Khởi động nghiên cứu quy chuẩn đầy đủ (n=1.200); khởi động RCT (RSMM so với tiêu chuẩn so với danh sách chờ); phát triển mô hình chấm điểm thanh điệu; công cụ gợi ý v1.0 (dựa trên quy tắc); ra mắt thử nghiệm beta toàn bộ nền tảng tại 2 bệnh viện</span>
+              </td>
+              <td>
+                <span lang="en">RCT enrolment on track; normative data n≥600; SLP satisfaction with recommendation engine ≥4/5</span>
+                <span lang="vi">Việc tuyển chọn RCT đúng tiến độ; dữ liệu quy chuẩn n≥600; mức độ hài lòng của chuyên gia SLP với công cụ gợi ý ≥4/5</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>
+                  <span lang="en">Phase 3</span>
+                  <span lang="vi">Giai đoạn 3</span>
+                </strong>
+                <br>
+                <span style="font-size:11px;color:var(--color-text-tertiary)">
+                  <span lang="en">Scale</span>
+                  <span lang="vi">Mở rộng</span>
+                </span>
+              </td>
+              <td>30–36</td>
+              <td>
+                <span lang="en">RCT interim analysis; national platform rollout planning; Vietnam MoH medical device registration application; international journal publications (normative data, feasibility RCT); Southern and Central dialect modules</span>
+                <span lang="vi">Phân tích giữa kỳ RCT; lập kế hoạch triển khai nền tảng quy mô quốc gia; đơn đăng ký trang thiết bị y tế với Bộ Y tế Việt Nam; xuất bản bài báo trên tạp chí quốc tế (dữ liệu quy chuẩn, RCT tính khả thi); các mô-đun phương ngữ miền Nam và miền Trung</span>
+              </td>
+              <td>
+                <span lang="en">RCT primary outcome trend positive; MoH engagement confirmed; ≥1 peer-reviewed publication submitted</span>
+                <span lang="vi">Xu hướng kết quả chính của RCT tích cực; xác nhận sự tham gia của Bộ Y tế Việt Nam; nộp ít nhất 1 bài báo có bình duyệt chuyên gia</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h2>
+        <span lang="en">Partnership architecture</span>
+        <span lang="vi">Kiến trúc hợp tác</span>
+      </h2>
+      <div class="two-col">
+        <div class="card">
+          <span class="badge badge-teal" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Clinical partners</span>
+            <span lang="vi">Đối tác lâm sàng</span>
+          </span>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">Hanoi Medical University — normative study lead</span>
+              <span lang="vi">Đại học Y Hà Nội — đơn vị dẫn đầu nghiên cứu quy chuẩn</span>
+            </li>
+            <li>
+              <span lang="en">HCMC University of Medicine and Pharmacy — Southern dialect data</span>
+              <span lang="vi">Đại học Y Dược TP.HCM — thu thập dữ liệu phương ngữ miền Nam</span>
+            </li>
+            <li>
+              <span lang="en">National Children's Hospital (Bệnh viện Nhi Trung Ương) — clinical validation site</span>
+              <span lang="vi">Bệnh viện Nhi Trung ương — điểm xác thực lâm sàng</span>
+            </li>
+            <li>
+              <span lang="en">Vietnam Rehabilitation Association — SLP workforce engagement</span>
+              <span lang="vi">Hội Phục hồi Chức năng Việt Nam — kết nối lực lượng chuyên gia SLP</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge-purple" style="margin-bottom:0.5rem; display:inline-block">
+            <span lang="en">Academic partners</span>
+            <span lang="vi">Đối tác học thuật</span>
+          </span>
+          <ul style="font-size:13px">
+            <li>
+              <span lang="en">University of Queensland (McLeod lab) — normative methodology</span>
+              <span lang="vi">Đại học Queensland (phòng thí nghiệm McLeod) — phương pháp luận quy chuẩn</span>
+            </li>
+            <li>
+              <span lang="en">Macquarie University — multilingual SSD expertise</span>
+              <span lang="vi">Đại học Macquarie — chuyên môn về SSD đa ngôn ngữ</span>
+            </li>
+            <li>
+              <span lang="en">IRCAM / University of Music research labs — acoustic analysis of Vietnamese tones</span>
+              <span lang="vi">Phòng nghiên cứu IRCAM / Đại học Âm nhạc — phân tích âm học thanh điệu tiếng Việt</span>
+            </li>
+            <li>
+              <span lang="en">Vietnam National Institute of Music — Kodály/folk song corpus</span>
+              <span lang="vi">Viện Âm nhạc Quốc gia Việt Nam — kho lưu trữ dân ca/Kodály</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-success">
+        <strong>
+          <span lang="en">Strategic imperative:</span>
+          <span lang="vi">Mục tiêu chiến lược:</span>
+        </strong>
+        <span lang="en">The platform's normative data collection function is not merely a prerequisite to clinical validity — it is itself a major scientific contribution. The first nationally representative, dialect-stratified Vietnamese pediatric phonological acquisition norms would be a landmark dataset, publishable in journals such as the <em>Journal of Speech, Language, and Hearing Research</em> or <em>Clinical Linguistics and Phonetics</em>, and would establish this platform as the definitive infrastructure for Vietnamese SSD research globally.</span>
+        <span lang="vi">Chức năng thu thập dữ liệu quy chuẩn của nền tảng không chỉ đơn thuần là điều kiện tiên quyết cho giá trị lâm sàng — tự nó đã là một đóng góp khoa học lớn. Bộ chuẩn về thu nhận âm vị học nhi khoa Việt Nam được phân tầng theo phương ngữ và mang tính đại diện quốc gia đầu tiên sẽ là một tập dữ liệu mang tính cột mốc, có thể công bố trên các tạp chí uy tín như <em>Journal of Speech, Language, and Hearing Research</em> hoặc <em>Clinical Linguistics and Phonetics</em>, đồng thời khẳng định vị thế của nền tảng này như một cơ sở hạ tầng định hình cho nghiên cứu về SSD tiếng Việt trên toàn cầu.</span>
+      </div>
+
+      <h2>
+        <span lang="en">Risk register</span>
+        <span lang="vi">Bảng theo dõi rủi ro</span>
+      </h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>
+              <span lang="en">Risk</span>
+              <span lang="vi">Rủi ro</span>
+            </th>
+            <th>
+              <span lang="en">Likelihood</span>
+              <span lang="vi">Khả năng xảy ra</span>
+            </th>
+            <th>
+              <span lang="en">Impact</span>
+              <span lang="vi">Tác động</span>
+            </th>
+            <th>
+              <span lang="en">Mitigation</span>
+              <span lang="vi">Biện pháp giảm thiểu</span>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">AI tone scoring insufficient accuracy in noisy home environments</span>
+              <span lang="vi">Độ chính xác chấm điểm thanh điệu bằng AI không đủ trong môi trường gia đình ồn ào</span>
+            </td>
+            <td><span lang="en">High</span><span lang="vi">Cao</span></td>
+            <td><span lang="en">High</span><span lang="vi">Cao</span></td>
+            <td>
+              <span lang="en">Noise-robust model training; in-app recording quality guidance; hybrid human-AI review queue</span>
+              <span lang="vi">Huấn luyện mô hình chống nhiễu tiếng ồn; hướng dẫn chất lượng ghi âm trong ứng dụng; hàng đợi đánh giá kết hợp con người - AI</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Normative data collection underpowered (rural access)</span>
+              <span lang="vi">Thu thập dữ liệu quy chuẩn thiếu nguồn lực/mẫu (khó tiếp cận vùng nông thôn)</span>
+            </td>
+            <td><span lang="en">Medium</span><span lang="vi">Trung bình</span></td>
+            <td><span lang="en">High</span><span lang="vi">Cao</span></td>
+            <td>
+              <span lang="en">Community health worker (cộng tác viên y tế) network as data collectors; offline data capture; mobile collection units</span>
+              <span lang="vi">Mạng lưới cộng tác viên y tế làm nhiệm vụ thu thập dữ liệu; ghi nhận dữ liệu ngoại tuyến; các đơn vị thu thập di động</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Caregiver non-adherence to home program</span>
+              <span lang="vi">Người chăm sóc không tuân thủ chương trình tại nhà</span>
+            </td>
+            <td><span class="badge badge-red"><span lang="en">High</span><span lang="vi">Cao</span></span></td>
+            <td><span class="badge badge-amber"><span lang="en">Medium</span><span lang="vi">Trung bình</span></span></td>
+            <td>
+              <span lang="en">Gamification; social comparison features; teacher/school integration; SMS nudge system</span>
+              <span lang="vi">Game hóa; tính năng so sánh xã hội; tích hợp giáo viên/nhà trường; hệ thống nhắn tin nhắc nhở SMS</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Misdiagnosis leading to unnecessary referrals</span>
+              <span lang="vi">Chẩn đoán sai dẫn đến chuyển gửi can thiệp không cần thiết</span>
+            </td>
+            <td><span lang="en">Medium</span><span lang="vi">Trung bình</span></td>
+            <td><span lang="en">High</span><span lang="vi">Cao</span></td>
+            <td>
+              <span lang="en">Sensitivity-prioritized thresholds (err toward referral); transparent uncertainty communication; human SLP oversight queue</span>
+              <span lang="vi">Ngưỡng ưu tiên độ nhạy (chấp nhận chuyển gửi thừa hơn thiếu); truyền thông minh bạch về mức độ không chắc chắn; hàng đợi giám sát từ chuyên gia SLP con người</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span lang="en">Vietnam MoH regulatory delay for medical device classification</span>
+              <span lang="vi">Sự chậm trễ từ Bộ Y tế Việt Nam trong việc phê duyệt phân loại trang thiết bị y tế</span>
+            </td>
+            <td><span lang="en">Medium</span><span lang="vi">Trung bình</span></td>
+            <td><span lang="en">Medium</span><span lang="vi">Trung bình</span></td>
+            <td>
+              <span lang="en">Early MoH engagement; stage-gate as "wellness/educational" tool initially; collect evidence for device reclassification</span>
+              <span lang="vi">Tham gia trao đổi sớm với Bộ Y tế Việt Nam; phân kỳ định vị là công cụ "chăm sóc sức khỏe/giáo dục" ban đầu; thu thập minh chứng để phân loại lại thiết bị y tế</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="alert alert-info">
+        <strong>
+          <span lang="en">Final framing:</span>
+          <span lang="vi">Bối cảnh cốt lõi cuối cùng:</span>
+        </strong>
+        <span lang="en">This platform is not a digital SLP. It is a <strong>clinical infrastructure primitive</strong> — the first data-generating, caregiver-activating, culturally indigenous layer of a speech health system that Vietnam currently does not possess. Its near-term value is screening and education. Its long-term value is the normative and outcomes dataset it generates, which will underpin the next 30 years of Vietnamese pediatric speech pathology. Build accordingly: with scientific rigor, cultural humility, and the understanding that the platform's most important output is not a treatment recommendation — it is a child's voice, finally heard.</span>
+        <span lang="vi">Nền tảng này không phải là một chuyên viên SLP kỹ thuật số. Nó là một <strong>cơ sở hạ tầng lâm sàng nguyên bản</strong> — lớp cấu trúc bản địa văn hóa đầu tiên giúp tạo ra dữ liệu, kích hoạt vai trò người chăm sóc cho một hệ thống sức khỏe âm ngữ mà Việt Nam hiện chưa sở hữu. Giá trị ngắn hạn của nó là sàng lọc và giáo dục. Giá trị dài hạn là tập dữ liệu quy chuẩn và kết quả lâm sàng mà nó tạo ra, đóng vai trò nền tảng cho 30 năm tiếp theo của ngành âm ngữ trị liệu nhi khoa tại Việt Nam. Hãy xây dựng phù hợp: với sự nghiêm túc khoa học, sự khiêm nhường về văn hóa, và sự thấu hiểu rằng kết quả đầu ra quan trọng nhất của nền tảng không phải là một khuyến nghị can thiệp — mà chính là tiếng nói của một đứa trẻ, cuối cùng đã được lắng nghe.</span>
+      </div>
+
+      <div class="nav-btn-row">
+        <button class="nav-btn" onclick="showSection(5)">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i> 
+          <span lang="en">Platform Architecture</span>
+          <span lang="vi">Kiến trúc Nền tảng</span>
+        </button>
+        <button class="nav-btn" disabled>
+          <span lang="en">End of report</span>
+          <span lang="vi">Hết báo cáo</span>
+          <i class="ti ti-check" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item');
+const pfill = document.getElementById('pfill');
+
+function showSection(idx) {
+  sections.forEach((s, i) => s.classList.toggle('active', i === idx));
+  navItems.forEach((n, i) => n.classList.toggle('active', i === idx));
+  pfill.style.width = ((idx + 1) / 7 * 100).toFixed(0) + '%';
+  document.getElementById('content').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+// Sidebar Drawer logic
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  sidebar.classList.toggle('open');
+  backdrop.classList.toggle('active');
+}
+
+// Language logic
+function setLanguage(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  const btnEn = document.getElementById('lang-btn-en');
+  const btnVi = document.getElementById('lang-btn-vi');
+  if (lang === 'en') {
+    if (btnEn) btnEn.classList.add('active');
+    if (btnVi) btnVi.classList.remove('active');
+  } else {
+    if (btnVi) btnVi.classList.add('active');
+    if (btnEn) btnEn.classList.remove('active');
+  }
+  localStorage.setItem('preferred-lang', lang);
+}
+
+// Theme logic
+function toggleTheme() {
+  const isDark = document.body.classList.contains('theme-dark');
+  const newTheme = isDark ? 'light' : 'dark';
+  setTheme(newTheme);
+}
+
+function setTheme(theme) {
+  const icon = document.getElementById('theme-icon');
+  if (theme === 'dark') {
+    document.body.classList.add('theme-dark');
+    document.body.classList.remove('theme-light');
+    if (icon) {
+      icon.className = 'ti ti-sun';
+    }
+  } else {
+    document.body.classList.add('theme-light');
+    document.body.classList.remove('theme-dark');
+    if (icon) {
+      icon.className = 'ti ti-moon';
+    }
+  }
+  localStorage.setItem('preferred-theme', theme);
+}
+
+// Initialize on DOM Load
+document.addEventListener('DOMContentLoaded', () => {
+  // Load saved language or default to English
+  const savedLang = localStorage.getItem('preferred-lang') || 'en';
+  setLanguage(savedLang);
+
+  // Load saved theme or default to system theme preference, fallback to light
+  const savedTheme = localStorage.getItem('preferred-theme') || 
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  setTheme(savedTheme);
+});
+
+document.querySelectorAll('.nav-item').forEach((el, i) => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    showSection(i);
+    // Close mobile drawer on navigation click
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (sidebar && sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+    }
+    if (backdrop && backdrop.classList.contains('active')) {
+      backdrop.classList.remove('active');
+    }
+  });
+});
+</script>
